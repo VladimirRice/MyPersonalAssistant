@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D64" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName=".Category" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String" defaultValueString="&lt;не выбрана&gt;"/>
+    </entity>
+    <entity name="ListTasks" representedClassName=".ListTasks" syncable="YES">
+        <attribute name="compare" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="turn" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tasks" inverseName="relationship" inverseEntity="Tasks"/>
+    </entity>
+    <entity name="Nomenklature" representedClassName="Nomenklature" syncable="YES">
+        <attribute name="article" optional="YES" attributeType="String"/>
+        <attribute name="checkmark" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="priority" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Tasks" representedClassName="Tasks" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="color" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="compare" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="dateNotification" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateTermination" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="go" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="heading" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="idList" optional="YES" attributeType="String"/>
+        <attribute name="image0" optional="YES" attributeType="Binary"/>
+        <attribute name="image1" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="image2" optional="YES" attributeType="Binary"/>
+        <attribute name="imageTask" optional="YES" attributeType="Binary"/>
+        <attribute name="isClose" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="listName" attributeType="String" defaultValueString=""/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="priority" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="turn" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListTasks" inverseName="relationship" inverseEntity="ListTasks"/>
+        <fetchedProperty name="fetchedProperty" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Tasks" predicateString="idList = Listst.id"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="Category" positionX="54" positionY="54" width="128" height="74"/>
+        <element name="ListTasks" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Nomenklature" positionX="-63" positionY="108" width="128" height="148"/>
+        <element name="Tasks" positionX="178.7810668945312" positionY="-102.7038879394531" width="128" height="380"/>
+    </elements>
+</model>
