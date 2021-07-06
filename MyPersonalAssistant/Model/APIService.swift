@@ -42,6 +42,7 @@ class APIService {
         }
     }
  
+    //func doRequestPatch(urlString: String, params: [String: String]?, accTok: String, paramsBody: String) {
     func doRequestPatch(urlString: String, params: [String: String]?, accTok: String, paramsBody: [String: String]) {
         var params = params
         if params == nil && accTok != nil {
@@ -52,7 +53,8 @@ class APIService {
         }
         let url = URL(string: urlString)
         var request = URLRequest(url: url! as URL)
-        request.httpMethod = "PATCH" //set http method
+        //request.httpMethod = "PATCH" //set http method
+        request.httpMethod = "POST" //set http method
         for param in params! {
             request.addValue(param.key, forHTTPHeaderField: param.value)
         }
@@ -65,7 +67,12 @@ class APIService {
         //let body = ["status": "needsAction"]
         //let paramsBody = ["name": "__M"]
         //let body: NSMutableDictionary? = paramsBody as? NSMutableDictionary
-        let body = paramsBody
+        //let body = paramsBody
+        
+        //let body = (paramsBody as NSString).data(using: String.Encoding.utf8.rawValue)
+        
+        //let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
+        
 //        let bodyData = try? JSONSerialization.data(
 //            withJSONObject: body,
 //            options: []
@@ -76,22 +83,28 @@ class APIService {
 //            "name": "11111",
 //            "phone": "22222"]
         
-        let data = try! JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted)
+//        let data = try! JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted)
+//
+//        let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//        if let json = json {
+//            print(json)
+//        }
+//        request.httpBody = json!.data(using: String.Encoding.utf8.rawValue)
+        
+        let data = try! JSONSerialization.data(withJSONObject: paramsBody, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let jsons = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
 
-        let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        if let json = json {
-            print(json)
-        }
-        request.httpBody = json!.data(using: String.Encoding.utf8.rawValue)
+        
+        request.httpBody = jsonData
         
         AF.request(request).responseJSON { response in
-//            switch response.result {
-//            case .success(let result):
-//                //let json = JSON(response.data)
-//                //completion(json, nil)
-//            case .failure(let error):
-//                //completion(nil, error)
-//            }
+            switch response.result {
+            case .success(let result): break
+                //let json = JSON(response.data)
+                //completion(json, nil)
+            case .failure(let error): break
+                //completion(nil, error)
+            }
         }
     }
     

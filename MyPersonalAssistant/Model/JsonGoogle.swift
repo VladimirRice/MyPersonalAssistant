@@ -278,8 +278,14 @@ class JsonGoogle {
 
                     //https://tasks.googleapis.com/tasks/v1/users/@me/lists/{tasklist}
                     let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/"
-                    //let paramsBody = ["name": dataObject.name, "updatedDate": Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd HH:mm")] as [String : String]
-                    let paramsBody: [String : String] = ["name": dataObject.name!, "updatedDate": Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd HH:mm")] 
+                    let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd HH:mm")
+                    
+                    //let paramsBody = ["name": dataObject.name, "updatedDate": updatedDate] as [String : String]
+                    //let paramsBody: [String : String] = ["name": dataObject.name!, "updatedDate": updatedDate]
+                    let paramsBody: [String : String] = ["name": dataObject.name!]
+                    //let bodystring = "{ \"title\": \"\(temptask.title)\",\"notes\": \"\(temptask.notes)\" }"
+                    //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
+
                     //let paramsBody = ["":""]
                     APIService().doRequestPatch(urlString: urlString, params: nil, accTok: currListID, paramsBody: paramsBody)
 

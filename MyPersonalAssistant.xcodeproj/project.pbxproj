@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40FD58A4DBA2274C8AFB30B6 /* Pods_MyPersonalAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F2222840F197B6A2D039168 /* Pods_MyPersonalAssistant.framework */; };
-		72D928D6576438B1A6C7EA51 /* Pods_TasksWatch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 640B5B31EED9B64258318ED3 /* Pods_TasksWatch_Extension.framework */; };
 		9F2C677125824EA900FA08E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C676F25824EA900FA08E1 /* Main.storyboard */; };
 		9F7476B725823039005AA02D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7476B625823039005AA02D /* SceneDelegate.swift */; };
 		9F7476C425823039005AA02D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7476C225823039005AA02D /* LaunchScreen.storyboard */; };
@@ -60,7 +58,9 @@
 		9F74781525823320005AA02D /* FileTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7477E725823320005AA02D /* FileTextViewController.swift */; };
 		9F9BEE072585E4360078CFDC /* PublicVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9BEE062585E4360078CFDC /* PublicVars.swift */; };
 		9FB303BD25944763003F78BA /* IJProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB303BC25944763003F78BA /* IJProgressView.swift */; };
-		CB9750794AAD30075C74D5EA /* Pods_TasksWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFE038BD0FA731CB82275516 /* Pods_TasksWatch.framework */; };
+		ABD01E3B88DCA15BB00F5BFA /* Pods_MyPersonalAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E957E1AA05F484ECBA0233C /* Pods_MyPersonalAssistant.framework */; };
+		B29CD3DF8516FB87AD71953A /* Pods_TasksWatch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCF30F13AE044164D4AEDB64 /* Pods_TasksWatch_Extension.framework */; };
+		FB2195966D149976161BC7D4 /* Pods_TasksWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5BED27CB9A85D1E933A262 /* Pods_TasksWatch.framework */; };
 		FD02EF2E25AEE0BF0004AFA8 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD02EF2C25AEE0BF0004AFA8 /* Category+CoreDataClass.swift */; };
 		FD02EF2F25AEE0BF0004AFA8 /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD02EF2D25AEE0BF0004AFA8 /* Category+CoreDataProperties.swift */; };
 		FD02EF3125AEE13C0004AFA8 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD02EF3025AEE13C0004AFA8 /* CategoryModel.swift */; };
@@ -127,14 +127,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3CE70207E421AB8E2A42792B /* Pods-MyPersonalAssistant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPersonalAssistant.release.xcconfig"; path = "Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant.release.xcconfig"; sourceTree = "<group>"; };
-		3F2222840F197B6A2D039168 /* Pods_MyPersonalAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPersonalAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		447A5A846729552BF015D347 /* Pods-TasksWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch Extension.debug.xcconfig"; path = "Target Support Files/Pods-TasksWatch Extension/Pods-TasksWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		5F6BACCA8D4F12198B5466EE /* Pods-TasksWatch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch Extension.release.xcconfig"; path = "Target Support Files/Pods-TasksWatch Extension/Pods-TasksWatch Extension.release.xcconfig"; sourceTree = "<group>"; };
-		622C134C8F3309E87043C7AA /* Pods-MyPersonalAssistant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPersonalAssistant.debug.xcconfig"; path = "Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant.debug.xcconfig"; sourceTree = "<group>"; };
-		640B5B31EED9B64258318ED3 /* Pods_TasksWatch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TasksWatch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8AC5EBA6AD89E21BBE0AAC53 /* Pods-TasksWatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch.debug.xcconfig"; path = "Target Support Files/Pods-TasksWatch/Pods-TasksWatch.debug.xcconfig"; sourceTree = "<group>"; };
-		9BE8F7921458080F3D8B7448 /* Pods-TasksWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch.release.xcconfig"; path = "Target Support Files/Pods-TasksWatch/Pods-TasksWatch.release.xcconfig"; sourceTree = "<group>"; };
+		0ED8A10E3432DD060EBA528A /* Pods-TasksWatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch.release.xcconfig"; path = "Target Support Files/Pods-TasksWatch/Pods-TasksWatch.release.xcconfig"; sourceTree = "<group>"; };
+		288C89C23A2B23E15B96AAFC /* Pods-TasksWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch Extension.debug.xcconfig"; path = "Target Support Files/Pods-TasksWatch Extension/Pods-TasksWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		4A5BED27CB9A85D1E933A262 /* Pods_TasksWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TasksWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C0921C5376E6837AD1EED64 /* Pods-MyPersonalAssistant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPersonalAssistant.debug.xcconfig"; path = "Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant.debug.xcconfig"; sourceTree = "<group>"; };
+		6E563C9101EA01DCFFDA94A4 /* Pods-MyPersonalAssistant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPersonalAssistant.release.xcconfig"; path = "Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant.release.xcconfig"; sourceTree = "<group>"; };
+		6E957E1AA05F484ECBA0233C /* Pods_MyPersonalAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPersonalAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95669401B59EF83CC5933F9A /* Pods-TasksWatch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch Extension.release.xcconfig"; path = "Target Support Files/Pods-TasksWatch Extension/Pods-TasksWatch Extension.release.xcconfig"; sourceTree = "<group>"; };
+		97FAD4B1FD93691ED4C3AC22 /* Pods-TasksWatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TasksWatch.debug.xcconfig"; path = "Target Support Files/Pods-TasksWatch/Pods-TasksWatch.debug.xcconfig"; sourceTree = "<group>"; };
 		9F2C677025824EA900FA08E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F7476B125823038005AA02D /* MyPersonalAssistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPersonalAssistant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7476B625823039005AA02D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 		9F7477E725823320005AA02D /* FileTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTextViewController.swift; sourceTree = "<group>"; };
 		9F9BEE062585E4360078CFDC /* PublicVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVars.swift; sourceTree = "<group>"; };
 		9FB303BC25944763003F78BA /* IJProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IJProgressView.swift; sourceTree = "<group>"; };
-		CFE038BD0FA731CB82275516 /* Pods_TasksWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TasksWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCF30F13AE044164D4AEDB64 /* Pods_TasksWatch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TasksWatch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD02EF2C25AEE0BF0004AFA8 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FD02EF2D25AEE0BF0004AFA8 /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FD02EF3025AEE13C0004AFA8 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB9750794AAD30075C74D5EA /* Pods_TasksWatch.framework in Frameworks */,
+				FB2195966D149976161BC7D4 /* Pods_TasksWatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDDCEB9025EDD0B900F0EBDA /* CloudKit.framework in Frameworks */,
-				40FD58A4DBA2274C8AFB30B6 /* Pods_MyPersonalAssistant.framework in Frameworks */,
+				ABD01E3B88DCA15BB00F5BFA /* Pods_MyPersonalAssistant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72D928D6576438B1A6C7EA51 /* Pods_TasksWatch_Extension.framework in Frameworks */,
+				B29CD3DF8516FB87AD71953A /* Pods_TasksWatch_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,12 +249,12 @@
 		7B3BD5ECEB3899315D43C3AF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				622C134C8F3309E87043C7AA /* Pods-MyPersonalAssistant.debug.xcconfig */,
-				3CE70207E421AB8E2A42792B /* Pods-MyPersonalAssistant.release.xcconfig */,
-				8AC5EBA6AD89E21BBE0AAC53 /* Pods-TasksWatch.debug.xcconfig */,
-				9BE8F7921458080F3D8B7448 /* Pods-TasksWatch.release.xcconfig */,
-				447A5A846729552BF015D347 /* Pods-TasksWatch Extension.debug.xcconfig */,
-				5F6BACCA8D4F12198B5466EE /* Pods-TasksWatch Extension.release.xcconfig */,
+				4C0921C5376E6837AD1EED64 /* Pods-MyPersonalAssistant.debug.xcconfig */,
+				6E563C9101EA01DCFFDA94A4 /* Pods-MyPersonalAssistant.release.xcconfig */,
+				97FAD4B1FD93691ED4C3AC22 /* Pods-TasksWatch.debug.xcconfig */,
+				0ED8A10E3432DD060EBA528A /* Pods-TasksWatch.release.xcconfig */,
+				288C89C23A2B23E15B96AAFC /* Pods-TasksWatch Extension.debug.xcconfig */,
+				95669401B59EF83CC5933F9A /* Pods-TasksWatch Extension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -434,9 +434,9 @@
 			children = (
 				FDB636DA2622BBF70023EDAD /* GoogleAPIClientForREST.framework */,
 				FDDCEB8F25EDD0B900F0EBDA /* CloudKit.framework */,
-				3F2222840F197B6A2D039168 /* Pods_MyPersonalAssistant.framework */,
-				CFE038BD0FA731CB82275516 /* Pods_TasksWatch.framework */,
-				640B5B31EED9B64258318ED3 /* Pods_TasksWatch_Extension.framework */,
+				6E957E1AA05F484ECBA0233C /* Pods_MyPersonalAssistant.framework */,
+				4A5BED27CB9A85D1E933A262 /* Pods_TasksWatch.framework */,
+				BCF30F13AE044164D4AEDB64 /* Pods_TasksWatch_Extension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -491,13 +491,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F7476DE2582303A005AA02D /* Build configuration list for PBXNativeTarget "MyPersonalAssistant" */;
 			buildPhases = (
-				CF5FE101537F8AFC39EF30A8 /* [CP] Check Pods Manifest.lock */,
+				6899541E8596DB5060819757 /* [CP] Check Pods Manifest.lock */,
 				9F7476AD25823038005AA02D /* Sources */,
 				9F7476AE25823038005AA02D /* Frameworks */,
 				9F7476AF25823038005AA02D /* Resources */,
 				FD3F016425EB50670062B040 /* Embed Watch Content */,
-				19B5BB82BED4B29EC73D6747 /* [CP] Embed Pods Frameworks */,
-				724928A2AA3A04DC4FC416E8 /* [CP] Copy Pods Resources */,
+				DEFE89A10012668C272DB923 /* [CP] Embed Pods Frameworks */,
+				D18498065B92EAE4FE0FEB34 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -513,7 +513,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD3F01B525EB7AAA0062B040 /* Build configuration list for PBXNativeTarget "TasksWatch" */;
 			buildPhases = (
-				4C09B5B5846F2CB50D25B6B7 /* [CP] Check Pods Manifest.lock */,
+				52CF2A8A597C9A6BC6A16D17 /* [CP] Check Pods Manifest.lock */,
 				FD3F018F25EB7AA90062B040 /* Resources */,
 				FD3F01B425EB7AAA0062B040 /* Embed App Extensions */,
 				5394296077391EC15700E437 /* Frameworks */,
@@ -532,7 +532,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD3F01B125EB7AAA0062B040 /* Build configuration list for PBXNativeTarget "TasksWatch Extension" */;
 			buildPhases = (
-				41B6411ED8D76C119179C636 /* [CP] Check Pods Manifest.lock */,
+				BC7C6BB9FA3BD9AF1ECE6EC4 /* [CP] Check Pods Manifest.lock */,
 				FD3F019925EB7AAA0062B040 /* Sources */,
 				FD3F019A25EB7AAA0062B040 /* Frameworks */,
 				FD3F019B25EB7AAA0062B040 /* Resources */,
@@ -617,46 +617,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		19B5BB82BED4B29EC73D6747 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		41B6411ED8D76C119179C636 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TasksWatch Extension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4C09B5B5846F2CB50D25B6B7 /* [CP] Check Pods Manifest.lock */ = {
+		52CF2A8A597C9A6BC6A16D17 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -678,24 +639,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		724928A2AA3A04DC4FC416E8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CF5FE101537F8AFC39EF30A8 /* [CP] Check Pods Manifest.lock */ = {
+		6899541E8596DB5060819757 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -715,6 +659,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC7C6BB9FA3BD9AF1ECE6EC4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TasksWatch Extension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D18498065B92EAE4FE0FEB34 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEFE89A10012668C272DB923 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyPersonalAssistant/Pods-MyPersonalAssistant-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -958,7 +958,7 @@
 		};
 		9F7476DF2582303A005AA02D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 622C134C8F3309E87043C7AA /* Pods-MyPersonalAssistant.debug.xcconfig */;
+			baseConfigurationReference = 4C0921C5376E6837AD1EED64 /* Pods-MyPersonalAssistant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -982,7 +982,7 @@
 		};
 		9F7476E02582303A005AA02D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CE70207E421AB8E2A42792B /* Pods-MyPersonalAssistant.release.xcconfig */;
+			baseConfigurationReference = 6E563C9101EA01DCFFDA94A4 /* Pods-MyPersonalAssistant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1006,7 +1006,7 @@
 		};
 		FD3F01B225EB7AAA0062B040 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 447A5A846729552BF015D347 /* Pods-TasksWatch Extension.debug.xcconfig */;
+			baseConfigurationReference = 288C89C23A2B23E15B96AAFC /* Pods-TasksWatch Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
@@ -1031,7 +1031,7 @@
 		};
 		FD3F01B325EB7AAA0062B040 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F6BACCA8D4F12198B5466EE /* Pods-TasksWatch Extension.release.xcconfig */;
+			baseConfigurationReference = 95669401B59EF83CC5933F9A /* Pods-TasksWatch Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
@@ -1056,7 +1056,7 @@
 		};
 		FD3F01B625EB7AAA0062B040 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8AC5EBA6AD89E21BBE0AAC53 /* Pods-TasksWatch.debug.xcconfig */;
+			baseConfigurationReference = 97FAD4B1FD93691ED4C3AC22 /* Pods-TasksWatch.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1077,7 +1077,7 @@
 		};
 		FD3F01B725EB7AAA0062B040 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BE8F7921458080F3D8B7448 /* Pods-TasksWatch.release.xcconfig */;
+			baseConfigurationReference = 0ED8A10E3432DD060EBA528A /* Pods-TasksWatch.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
