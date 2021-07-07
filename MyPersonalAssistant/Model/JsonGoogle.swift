@@ -225,7 +225,7 @@ class JsonGoogle {
     }
     
     
-    class func googleObjectsInDataObjects(googleObjects: [Any], dataObjects: [Any]) {
+    class func googleObjectsInDataObjects(accTok: String, googleObjects: [Any], dataObjects: [Any]) {
         var vid = ""
         guard let googleObjectsList = googleObjects as? [ListModel], let googleObjectsTask = googleObjects as? [TaskModel] else {
             return
@@ -250,7 +250,7 @@ class JsonGoogle {
         
     }
     
-    class func dataObjectsInGoogleObjects(dataObjects: [Any]) {
+    class func dataObjectsInGoogleObjects(accTok: String, dataObjects: [Any]) {
             
             var vid = ""
     //        guard let dataObjectsList = dataObjects as? [ListModel], let dataObjectsTask = dataObjects as? [TaskModel] else {
@@ -287,7 +287,7 @@ class JsonGoogle {
                     //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
 
                     //let paramsBody = ["":""]
-                    APIService().doRequestPatch(urlString: urlString, params: nil, accTok: currListID, paramsBody: paramsBody)
+                    APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
 
                     //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
                 }

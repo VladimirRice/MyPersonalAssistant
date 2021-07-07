@@ -51,10 +51,12 @@ class APIService {
                 "application/json": "Accept"
             ]
         }
+        //params += paramsBody
+        
         let url = URL(string: urlString)
         var request = URLRequest(url: url! as URL)
         //request.httpMethod = "PATCH" //set http method
-        request.httpMethod = "POST" //set http method
+        request.httpMethod = "GET" //set http method
         for param in params! {
             request.addValue(param.key, forHTTPHeaderField: param.value)
         }
@@ -91,11 +93,20 @@ class APIService {
 //        }
 //        request.httpBody = json!.data(using: String.Encoding.utf8.rawValue)
         
-        let data = try! JSONSerialization.data(withJSONObject: paramsBody, options: JSONSerialization.WritingOptions.prettyPrinted)
-        let jsons = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-
         
-        request.httpBody = jsonData
+//        //let paramsBody: [String : String] = ["name": "__M"]
+//        let paramsBody = paramsBody
+//        //let bodystring = "{ \"title\": \"\(temptask.title)\",\"notes\": \"\(temptask.notes)\" }"
+//        //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
+//        //let paramsBody = "{ \"status\": \"needsAction\" }"
+//
+//        let data = try! JSONSerialization.data(withJSONObject: paramsBody, options: JSONSerialization.WritingOptions.prettyPrinted)
+//        //let jsons = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//
+//
+//        request.httpBody = data
+        
+        //request.httpBody = try! JSONSerialization.data(withJSONObject: paramsBody, options: [])
         
         AF.request(request).responseJSON { response in
             switch response.result {

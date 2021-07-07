@@ -174,10 +174,10 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                 
                 
                 if googleObjects.count == 0 {
-                    JsonGoogle.dataObjectsInGoogleObjects(dataObjects: dataObjects)
+                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjects)
                 } else {
                     if dataObjects.count == 0 {
-                        JsonGoogle.googleObjectsInDataObjects(googleObjects: googleObjects, dataObjects: dataObjects)
+                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: googleObjects, dataObjects: dataObjects)
                     } else {
                         // tasks
                         //let currDataObject = dataList[0]
@@ -191,7 +191,7 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                                 continue
                             }
                             if (currDataObject.updatedDate as? Date)! > (currGoogleObject?.updatedDate as? Date)! {
-                                JsonGoogle.dataObjectsInGoogleObjects(dataObjects: [currDataObject])
+                                JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObject])
                                 continue
                             }
                             var currGoogleObjects: [ListModel] = []
