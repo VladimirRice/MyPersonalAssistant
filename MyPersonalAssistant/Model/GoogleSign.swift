@@ -37,8 +37,8 @@ func initialSign(selfVC: UIViewController) {
     GIDSignIn.sharedInstance()?.presentingViewController = selfVC
 }
 
-func googleSynchron(selfVC: UIViewController, listID: String) -> Bool {
-    initialSign(selfVC: selfVC)
+func googleSynchron(selfVC: UIViewController?, listID: String) -> Bool {
+    initialSign(selfVC: selfVC!)
     let user = GIDSignIn.sharedInstance()!.currentUser
     if user == nil {
 //        GIDSignIn.sharedInstance().delegate = selfVC as? GIDSignInDelegate
@@ -50,7 +50,7 @@ func googleSynchron(selfVC: UIViewController, listID: String) -> Bool {
     
     if (GIDSignIn.sharedInstance()?.currentUser) != nil {
         
-        var status = true
+        //var status = true
         if listID != "" {
             let message = ""
             let title = "Синхронизация с Google"
@@ -58,33 +58,33 @@ func googleSynchron(selfVC: UIViewController, listID: String) -> Bool {
             
             // add an action (button)
             alertController.addAction(UIAlertAction(title: "Текущий список", style: UIAlertAction.Style.default, handler: { [weak alertController] (action) -> Void in
-                var listID = listID
-                listID = ""
-                googleSynchronNext(selfVC: selfVC, listID: listID)
+    
+                googleSynchronNext(selfVC: selfVC!, listID: listID)
+                //selfVC.tasksViewController.refreshControl?.endRefreshing()
                 //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
-                status = true
+                //status = true
             }
             ))
  
             alertController.addAction(UIAlertAction(title: "ВСЕ", style: UIAlertAction.Style.default, handler: { [weak alertController] (action) -> Void in
 
-                googleSynchronNext(selfVC: selfVC, listID: "")
+                googleSynchronNext(selfVC: selfVC!, listID: "")
                 //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
-                status = true
+                //status = true
             }
             ))
 
             // cancel
             alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak alertController] (action) -> Void in
-                status = false
+                //status = false
             }
             ))
             
             // show the alert
-            selfVC.present(alertController, animated: true, completion: nil)
+            selfVC!.present(alertController, animated: true, completion: nil)
         }
     
-        return status
+        return true
     } else {
         return false
     }
@@ -198,10 +198,13 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                 let googleListFromJson = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "list", idObjects: listID)
                 let googleObjectsList = googleListFromJson
         
+                var daleteObjectsNoModifi = true
+                
                 let dataObjectsListAll = ListTasksData.dataLoad(strPredicate: "", filter: "")
                 var dataObjectsList = dataObjectsListAll
                 if listID != "" {
                     dataObjectsList = dataObjectsListAll.filter { $0.id == listID }
+                    daleteObjectsNoModifi = false
                 }
                 
                 let dataObjectsTaskAll = TasksData.dataLoad(strPredicate: "", filter: "")
@@ -232,6 +235,9 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                     // dataObjectsList is true
                     if currDataObjectsList.count > 0 {
                         currDataObjectList = currDataObjectsList[0]
+                        //
+                        dataObjectsListModifi.append(currDataObjectList)
+                        //
                         if (currDataObjectList.updatedDate)! == ((googleObjectList as! ListModel).updatedDate) {
                             continue
                         }
@@ -262,6 +268,20 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                         let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
                         JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList)
                     })
+                }
+                
+                // deleteNoModifi
+                if dataObjectsListModifi != dataObjectsList {
+                    let appDelegate =
+                        UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    for dataObjectList in dataObjectsList {
+                        if !dataObjectsListModifi.contains(dataObjectList) {
+                            context.delete(dataObjectList)
+                        }
+                    }
+                    
+                    ListTasksData.saveObjects()
                 }
             })
             

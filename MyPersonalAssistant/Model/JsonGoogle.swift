@@ -255,7 +255,7 @@ class JsonGoogle {
         
         
         if let googleObjectsList = googleObjects as? [ListModel] {
-            var modifiDataObjects: [ListTasks] = []
+            //var modifiDataObjects: [ListTasks] = []
             
             for googleObject in googleObjectsList {
                 let id = googleObject.id
@@ -271,7 +271,8 @@ class JsonGoogle {
                 dataObject.name = googleObject.name
                 dataObject.updatedDate = googleObject.updatedDate
                 
-                modifiDataObjects.append(dataObject)
+                //modifiDataObjects.append(dataObject)
+                ListTasksData.saveObjects()
             }
             
         }
