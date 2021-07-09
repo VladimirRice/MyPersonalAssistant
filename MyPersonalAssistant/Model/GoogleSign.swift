@@ -170,17 +170,20 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                     predicate = ""
                     filter = ""
                 }
-                var dataObjects = ListTasksData.dataLoad(strPredicate: predicate, filter: filter)
-                
+                let dataObjects = ListTasksData.dataLoad(strPredicate: predicate, filter: filter)
                 
                 if googleObjects.count == 0 {
                     JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjects)
                 } else {
                     if dataObjects.count == 0 {
-                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: googleObjects, dataObjects: dataObjects)
+                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: googleObjects as [Any], dataObjects: dataObjects)
                     } else {
                         // tasks
                         //let currDataObject = dataList[0]
+                    
+//                        // 0: data - google
+//                        // 1: google - data
+//                        var directionModifi = 0
                         
                         for googleObject in googleObjects {
                             let currGoogleObject = googleObject as? ListModel
@@ -190,7 +193,7 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                             guard let currDataObject = currDataObjects[0] as? ListTasks else {
                                 continue
                             }
-                            if (currDataObject.updatedDate as? Date)! > (currGoogleObject?.updatedDate as? Date)! {
+                            if (currDataObject.updatedDate)! > (currGoogleObject?.updatedDate)! {
                                 JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObject])
                                 continue
                             }

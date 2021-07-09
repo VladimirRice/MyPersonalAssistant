@@ -104,7 +104,7 @@ class JsonGoogle {
                 object.compare = false
                 
                 GoogleObjects.append(object)
-                return GoogleObjects
+                //return GoogleObjects
             }
             
             if vidObjects == "task" {
@@ -279,7 +279,7 @@ class JsonGoogle {
                     
                     //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me\(currListID)/"
                     let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
-                    let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd HH:mm")
+                    let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
                     
                     //let paramsBody = ["name": dataObject.name, "updatedDate": updatedDate] as [String : String]
                     
