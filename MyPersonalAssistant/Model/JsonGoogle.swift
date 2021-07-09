@@ -225,120 +225,169 @@ class JsonGoogle {
     }
     
     
-    class func googleObjectsInDataObjects(accTok: String, googleObjects: [Any], dataObjects: [Any]) {
-        var vid = ""
-        guard let googleObjectsList = googleObjects as? [ListModel], let googleObjectsTask = googleObjects as? [TaskModel] else {
-            return
-        }
+    class func googleObjectsInDataObjects(accTok: String, googleObjects: [Any]) {
         
-        if googleObjectsList != nil {
-            vid = "list"
-        }
-        if googleObjectsTask != nil {
-            vid = "task"
-        }
+            let appDelegate =
+                UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
         
-        if vid == "list" {
-            let googleObjects = googleObjectsList
+//        var vid = ""
+//        guard let googleObjectsList = googleObjects as? [ListModel], let googleObjectsTask = googleObjects as? [TaskModel] else {
+//            return
+//        }
+//
+//        if googleObjectsList != nil {
+//            vid = "list"
+//        }
+//        if googleObjectsTask != nil {
+//            vid = "task"
+//        }
+//
+//        if vid == "list" {
+//            let googleObjects = googleObjectsList
+//
+//            for googleObject in googleObjects {
+//
+//                let id = googleObject.id
+//                //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
+//            }
+//        }
+        
+        
+        if let googleObjectsList = googleObjects as? [ListModel] {
+            var modifiDataObjects: [ListTasks] = []
             
-            for googleObject in googleObjects {
-                
+            for googleObject in googleObjectsList {
                 let id = googleObject.id
-                let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
+                var dataObjectList = ListTasksData.dataLoad(strPredicate: "id = %@", filter: id)
+                
+                var dataObject: ListTasks!
+                if dataObjectList.count > 0 {
+                    dataObject = dataObjectList[0]
+                } else {
+                    dataObject = NSEntityDescription.insertNewObject(forEntityName: "ListTasks", into: context) as! ListTasks
+                    dataObject.id = id
+                }
+                dataObject.name = googleObject.name
+                dataObject.updatedDate = googleObject.updatedDate
+                
+                modifiDataObjects.append(dataObject)
             }
+            
         }
+        
         
     }
     
     class func dataObjectsInGoogleObjects(accTok: String, dataObjects: [Any]) {
-            
-            var vid = ""
-    //        guard let dataObjectsList = dataObjects as? [ListModel], let dataObjectsTask = dataObjects as? [TaskModel] else {
-//    //            return
-//    //        }
-//
-//    //        switch dataObjects {
-//    //        case dataObjects as? [ListModel]
-//    //            <#code#>
-//    //        case dataObjects as? [TaskModel]
-//    //            <#code#>
-//    //
-//    //        default:
-//    //            <#code#>
-//            //        }
-//
-            if let dataObjectsList = dataObjects as? [ListTasks] {
-
-                let currDataObjects = dataObjectsList
-
-                for dataObject in currDataObjects {
-
-                    let id = dataObject.id
-                    let currListID = dataObject.id!
-
-                    
-                    //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me\(currListID)/"
-                    let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
-                    let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
-                    
-                    //let paramsBody = ["name": dataObject.name, "updatedDate": updatedDate] as [String : String]
-                    
-                    
-                    //let bodystring = "{ \"title\": \"\(temptask.title)\",\"notes\": \"\(temptask.notes)\" }"
-                    
-                    //let paramsBody: [String : String] = ["name": dataObject.name!]
-                    //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
-                    let paramsBody: [String : String] = ["name": dataObject.name!, "updated": updatedDate]
-
-                    //let paramsBody = ["":""]
-                    APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
-
-                    //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
-                }
-                
-            }
-//
-//    //        if let dataObjectsList as? [ListModel] == nil, let dataObjectsTask as? [TaskModel] == nil {
-//    //            return
-//    //        }
-//
-//    //        guard let dataObjectsList = dataObjects as? [ListModel] else {
-//    //            vid = ""
-//    //        }
-//    //        guard let dataObjectsTask = dataObjects as? [ListModel] else {
-//    //            vid = ""
-//    //        }
-//
-//    //        if dataObjectsList != nil {
-//    //            vid = "list"
-//    //        }
-//    //        if dataObjectsTask != nil {
-//    //            vid = "task"
-//    //        }
-//    //
-//    //        if vid == "list" {
-//    //            let dataObjects = dataObjectsList
-//    //
-//    //            for dataObject in dataObjects {
-//    //
-//    //                let id = dataObject.id
-//    //                let currListID = dataObject.id
-//    //
-//    //                //https://tasks.googleapis.com/tasks/v1/users/@me/lists/{tasklist}
-//    //                let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/"
-//    //                let paramsBody = ["title": dataObject.name, "updatedDate": dataObject.updatedDate] as [String : Any]
-//    //                APIService().doRequestPatch(urlString: urlString, params: nil, accTok: currListID, paramsBody: paramsBody)
-//    //
-//    //
-//    //
-//    //                //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
-//    //            }
-//    //        }
-//
         
+        var vid = ""
+        //        guard let dataObjectsList = dataObjects as? [ListModel], let dataObjectsTask = dataObjects as? [TaskModel] else {
+        //    //            return
+        //    //        }
+        //
+        //    //        switch dataObjects {
+        //    //        case dataObjects as? [ListModel]
+        //    //            <#code#>
+        //    //        case dataObjects as? [TaskModel]
+        //    //            <#code#>
+        //    //
+        //    //        default:
+        //    //            <#code#>
+        //            //        }
+        //
+        // list
+        if let dataObjectsList = dataObjects as? [ListTasks] {
+            
+            let currDataObjects = dataObjectsList
+            
+            for dataObject in currDataObjects {
+                
+                //let currId = dataObject.id
+                let currListID = dataObject.id!
+                
+                let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
+                let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+                
+                //let paramsBody = ["name": dataObject.name, "updatedDate": updatedDate] as [String : String]
+                //let paramsBody: [String : String] = ["name": dataObject.name!]
+                //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
+                let paramsBody: [String : String] = ["name": dataObject.name!, "updated": updatedDate]
+
+                                
+                APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
+                
+
+            }
         }
         
-    } //class
+        // task
+        if let dataObjectsTask = dataObjects as? [Tasks] {
+            
+            let currDataObjects = dataObjectsTask
+            
+            for dataObject in currDataObjects {
+                
+                let currId = String(describing: dataObject.id)
+                let currListID = dataObject.idList!
+                
+                //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
+                let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks\(currId))/"
+                let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+                
+                let paramsBody: [String : String] = [
+                    "name": dataObject.name!,
+                    "updated": updatedDate
+                ]
+
+                APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
+                
+                //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
+            }
+            
+        }
+        //
+        //    //        if let dataObjectsList as? [ListModel] == nil, let dataObjectsTask as? [TaskModel] == nil {
+        //    //            return
+        //    //        }
+        //
+        //    //        guard let dataObjectsList = dataObjects as? [ListModel] else {
+        //    //            vid = ""
+        //    //        }
+        //    //        guard let dataObjectsTask = dataObjects as? [ListModel] else {
+        //    //            vid = ""
+        //    //        }
+        //
+        //    //        if dataObjectsList != nil {
+        //    //            vid = "list"
+        //    //        }
+        //    //        if dataObjectsTask != nil {
+        //    //            vid = "task"
+        //    //        }
+        //    //
+        //    //        if vid == "list" {
+        //    //            let dataObjects = dataObjectsList
+        //    //
+        //    //            for dataObject in dataObjects {
+        //    //
+        //    //                let id = dataObject.id
+        //    //                let currListID = dataObject.id
+        //    //
+        //    //                //https://tasks.googleapis.com/tasks/v1/users/@me/lists/{tasklist}
+        //    //                let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/"
+        //    //                let paramsBody = ["title": dataObject.name, "updatedDate": dataObject.updatedDate] as [String : Any]
+        //    //                APIService().doRequestPatch(urlString: urlString, params: nil, accTok: currListID, paramsBody: paramsBody)
+        //    //
+        //    //
+        //    //
+        //    //                //let currDataObjects = dataObjects.filter{ ($0 as AnyObject).id! == id }
+        //    //            }
+        //    //        }
+        //
+        
+    }
+    
+} //class
 
     
 

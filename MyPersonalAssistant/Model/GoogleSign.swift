@@ -50,10 +50,41 @@ func googleSynchron(selfVC: UIViewController, listID: String) -> Bool {
     
     if (GIDSignIn.sharedInstance()?.currentUser) != nil {
         
-        googleSynchronNext(selfVC: selfVC, listID: listID)
-        //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
-        
-        return true
+        var status = true
+        if listID != "" {
+            let message = ""
+            let title = "Синхронизация с Google"
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+            
+            // add an action (button)
+            alertController.addAction(UIAlertAction(title: "Текущий список", style: UIAlertAction.Style.default, handler: { [weak alertController] (action) -> Void in
+                var listID = listID
+                listID = ""
+                googleSynchronNext(selfVC: selfVC, listID: listID)
+                //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
+                status = true
+            }
+            ))
+ 
+            alertController.addAction(UIAlertAction(title: "ВСЕ", style: UIAlertAction.Style.default, handler: { [weak alertController] (action) -> Void in
+
+                googleSynchronNext(selfVC: selfVC, listID: "")
+                //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
+                status = true
+            }
+            ))
+
+            // cancel
+            alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { [weak alertController] (action) -> Void in
+                status = false
+            }
+            ))
+            
+            // show the alert
+            selfVC.present(alertController, animated: true, completion: nil)
+        }
+    
+        return status
     } else {
         return false
     }
@@ -151,6 +182,9 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
     }
     
     if let accTok = accessToken {
+    
+//        var listID = listID
+//        listID = ""
         
 //        var jsonList: [Any] = []
 //        var jsonTasks: [Any] = []
@@ -162,59 +196,74 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
             APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
                 guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
                 let googleListFromJson = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "list", idObjects: listID)
-                //jsonList = jsonList + jsonListFromJson
-                let googleObjects = googleListFromJson
-                var filter = listID
-                var predicate = "id == %@"//NSPredicate(format: "id = %@", filter!)
-                if listID == "" {
-                    predicate = ""
-                    filter = ""
+                let googleObjectsList = googleListFromJson
+        
+                let dataObjectsListAll = ListTasksData.dataLoad(strPredicate: "", filter: "")
+                var dataObjectsList = dataObjectsListAll
+                if listID != "" {
+                    dataObjectsList = dataObjectsListAll.filter { $0.id == listID }
                 }
-                let dataObjects = ListTasksData.dataLoad(strPredicate: predicate, filter: filter)
                 
-                if googleObjects.count == 0 {
-                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjects)
-                } else {
-                    if dataObjects.count == 0 {
-                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: googleObjects as [Any], dataObjects: dataObjects)
-                    } else {
-                        // tasks
-                        //let currDataObject = dataList[0]
+                let dataObjectsTaskAll = TasksData.dataLoad(strPredicate: "", filter: "")
+                var dataObjectsTask = dataObjectsTaskAll
+                if listID != "" {
+                    dataObjectsTask = dataObjectsTaskAll.filter { $0.idList == listID }
+                }
+
+                // no google
+                if googleObjectsList.count == 0 {
+                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsList)
+                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsTask)
+                    return
+                }
+            
+                var dataObjectsListModifi = dataObjectsList
+                dataObjectsListModifi.removeAll()
+
+                // list
+                for googleObjectList in googleObjectsList {
+        
+                    var directionModifiListDataGoogle = false
+                    var directionModifiTaskDataGoogle = false
                     
-//                        // 0: data - google
-//                        // 1: google - data
-//                        var directionModifi = 0
-                        
-                        for googleObject in googleObjects {
-                            let currGoogleObject = googleObject as? ListModel
-                            
-                            let currDataObjects = dataObjects.filter {$0.id == currGoogleObject?.id}
-                            
-                            guard let currDataObject = currDataObjects[0] as? ListTasks else {
-                                continue
-                            }
-                            if (currDataObject.updatedDate)! > (currGoogleObject?.updatedDate)! {
-                                JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObject])
-                                continue
-                            }
-                            var currGoogleObjects: [ListModel] = []
-                            currGoogleObjects.append(currGoogleObject!)
-                            
-          
-                            let currListID = currGoogleObject!.id
-                            let urlStringTasks = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks"
-                            APIService().doRequest(urlString: urlStringTasks, params: nil, accTok: accTok, completion: { (json, error) in
-                                guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
-                                let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
-                                //jsonTasks = jsonTasks + jsonTasksOfList
-                                let jsonTasks = jsonTasksOfList
-                            })
+                    let currDataObjectsList = dataObjectsList.filter {$0.id == (googleObjectList as! ListModel).id}
+                    var currDataObjectList: ListTasks!// = ListTasks()
+                    
+                    // dataObjectsList is true
+                    if currDataObjectsList.count > 0 {
+                        currDataObjectList = currDataObjectsList[0]
+                        if (currDataObjectList.updatedDate)! == ((googleObjectList as! ListModel).updatedDate) {
+                            continue
+                        }
+                        if (currDataObjectList.updatedDate)! > ((googleObjectList as! ListModel).updatedDate) {
+                            directionModifiListDataGoogle = true
+                            directionModifiTaskDataGoogle = true
+                            //JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectList])
                         }
                     }
+                    
+                    // надо сделать стереть лишние списки !!
+                    
+                    // data in google
+                    if directionModifiListDataGoogle, currDataObjectList != nil { // data in google
+                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectList!])
+                        let currDataObjectsTask = dataObjectsTask.filter {$0.idList == (googleObjectList as! ListModel).id}
+                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectsTask])
+                        continue
+                    }
+                    
+                    // google in data
+                    JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: [googleObjectList!])
+                    // tasks else google in data
+                    let currListID = (googleObjectList! as! ListModel).id
+                    let urlStringTasks = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks"
+                    APIService().doRequest(urlString: urlStringTasks, params: nil, accTok: accTok, completion: { (json, error) in
+                        guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
+                        let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
+                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList)
+                    })
                 }
             })
-            
-            
             
         } catch let error {
          print(error)
