@@ -225,7 +225,7 @@ class JsonGoogle {
     }
     
     
-    class func googleObjectsInDataObjects(accTok: String, googleObjects: [Any]) {
+    class func googleObjectsInDataObjects(accTok: String, googleObjects: [Any], completion: @escaping ([Any]?) -> ()) {
         
             let appDelegate =
                 UIApplication.shared.delegate as! AppDelegate
@@ -255,7 +255,7 @@ class JsonGoogle {
         
         
         if let googleObjectsList = googleObjects as? [ListModel] {
-            //var modifiDataObjects: [ListTasks] = []
+            var modifiDataObjects: [ListTasks] = []
             
             for googleObject in googleObjectsList {
                 let id = googleObject.id
@@ -271,9 +271,10 @@ class JsonGoogle {
                 dataObject.name = googleObject.name
                 dataObject.updatedDate = googleObject.updatedDate
                 
-                //modifiDataObjects.append(dataObject)
+                modifiDataObjects.append(dataObject)
                 ListTasksData.saveObjects()
             }
+            completion(modifiDataObjects)
             
         }
         

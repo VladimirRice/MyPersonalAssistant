@@ -198,13 +198,13 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                 let googleListFromJson = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "list", idObjects: listID)
                 let googleObjectsList = googleListFromJson
         
-                var daleteObjectsNoModifi = true
+                //var deleteObjectsNoModifi = true
                 
                 let dataObjectsListAll = ListTasksData.dataLoad(strPredicate: "", filter: "")
                 var dataObjectsList = dataObjectsListAll
                 if listID != "" {
                     dataObjectsList = dataObjectsListAll.filter { $0.id == listID }
-                    daleteObjectsNoModifi = false
+                    //deleteObjectsNoModifi = false
                 }
                 
                 let dataObjectsTaskAll = TasksData.dataLoad(strPredicate: "", filter: "")
@@ -217,6 +217,8 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                 if googleObjectsList.count == 0 {
                     JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsList)
                     JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsTask)
+                    // сравнить
+                    
                     return
                 }
             
@@ -244,11 +246,8 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                         if (currDataObjectList.updatedDate)! > ((googleObjectList as! ListModel).updatedDate) {
                             directionModifiListDataGoogle = true
                             directionModifiTaskDataGoogle = true
-                            //JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectList])
                         }
                     }
-                    
-                    // надо сделать стереть лишние списки !!
                     
                     // data in google
                     if directionModifiListDataGoogle, currDataObjectList != nil { // data in google
@@ -259,31 +258,40 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                     }
                     
                     // google in data
-                    JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: [googleObjectList!])
+                    JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: [googleObjectList!], completion: { (dataObjectsListModifi) in
+                        
+                        }
+                    )
+                    
                     // tasks else google in data
                     let currListID = (googleObjectList! as! ListModel).id
                     let urlStringTasks = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks"
                     APIService().doRequest(urlString: urlStringTasks, params: nil, accTok: accTok, completion: { (json, error) in
                         guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
                         let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
-                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList)
-                    })
-                }
-                
-                // deleteNoModifi
-                if dataObjectsListModifi != dataObjectsList {
-                    let appDelegate =
-                        UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    for dataObjectList in dataObjectsList {
-                        if !dataObjectsListModifi.contains(dataObjectList) {
-                            context.delete(dataObjectList)
+                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList, completion: { (dataObjectsListModifi) in
+                            
                         }
-                    }
-                    
-                    ListTasksData.saveObjects()
-                }
-            })
+                    )
+                    })
+                } // for list
+                
+//                // надо сделать стереть лишние списки !!
+//                // deleteNoModifi
+//                if dataObjectsListModifi != dataObjectsList {
+//                    let appDelegate =
+//                        UIApplication.shared.delegate as! AppDelegate
+//                    let context = appDelegate.persistentContainer.viewContext
+//                    for dataObjectList in dataObjectsList {
+//                        if !dataObjectsListModifi.contains(dataObjectList) {
+//                            context.delete(dataObjectList)
+//                        }
+//                    }
+//
+//                    ListTasksData.saveObjects()
+//                }
+                
+            }) //APIService().doRequest( 1 list
             
         } catch let error {
          print(error)
