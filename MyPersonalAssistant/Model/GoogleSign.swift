@@ -10,6 +10,18 @@ import GoogleSignIn
 import SwiftyJSON
 
 
+enum DirectionSynchronization {
+    case googleInData
+    case dataInGoogle
+    case none
+}
+
+enum Actions {
+    case add
+    case patch
+    case delete
+    case none
+}
 
 //func googleSign(selfVC: UIViewController, listID: String) {
 //    let user = GIDSignIn.sharedInstance()!.currentUser
@@ -213,86 +225,171 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                     dataObjectsTask = dataObjectsTaskAll.filter { $0.idList == listID }
                 }
 
-                // no google
-                if googleObjectsList.count == 0 {
-                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsList)
-                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsTask)
-                    // сравнить
-                    
-                    return
-                }
+                var directionSynchronization = DirectionSynchronization.dataInGoogle
+                
+//                // no google
+//                if googleObjectsList.count == 0 {
+//                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsList)
+//                    JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: dataObjectsTask)
+//                    // сравнить
+//
+//                    return
+//                }
             
-                var dataObjectsListModifi = dataObjectsList
-                dataObjectsListModifi.removeAll()
+//                var dataObjectsListModifi = dataObjectsList
+//                dataObjectsListModifi.removeAll()
 
-                // list
-                for googleObjectList in googleObjectsList {
-        
-                    var directionModifiListDataGoogle = false
-                    var directionModifiTaskDataGoogle = false
+//                var dataObjectsListForModifi: [ListTasks: DirectionSynchronization]
+//                var googleObjectsListForModifi: [ListModel?: DirectionSynchronization]
+                
+                //var listsModifi: [[DirectionSynchronization: AnyObject?: Actions]]  = [[:]]
+                
+                var listsModifi: [(directionSynchronization: DirectionSynchronization, object: AnyObject, action: Actions)] = []
+                var googleListsModifi: [ListModel] = []
+                
+                // data on google
+                for dataObjectList in dataObjectsList {
                     
-                    let currDataObjectsList = dataObjectsList.filter {$0.id == (googleObjectList as! ListModel).id}
-                    var currDataObjectList: ListTasks!// = ListTasks()
+                    var directionSynchronization:DirectionSynchronization!
+                    var actions: Actions
+                    var object: AnyObject? = dataObjectList
                     
-                    // dataObjectsList is true
-                    if currDataObjectsList.count > 0 {
-                        currDataObjectList = currDataObjectsList[0]
-                        //
-                        dataObjectsListModifi.append(currDataObjectList)
-                        //
-                        if (currDataObjectList.updatedDate)! == ((googleObjectList as! ListModel).updatedDate) {
-                            continue
+                    let currGoogleObjectsList = googleObjectsList.filter {($0 as? ListModel)?.id == (dataObjectList as? ListTasks)!.id}
+                    if currGoogleObjectsList.count > 0 {
+                        
+                        if (dataObjectList.updatedDate)! == ((currGoogleObjectsList[0] as! ListModel).updatedDate) {
+                            actions = Actions.none
+                            directionSynchronization = DirectionSynchronization.none
+                            object = currGoogleObjectsList[0] as? ListModel as AnyObject?
+                            googleListsModifi.append((currGoogleObjectsList[0] as? ListModel)!)
+
+                            //continue
+                        } else {
+                            actions = Actions.patch
+                            if (dataObjectList.updatedDate)! > ((currGoogleObjectsList[0] as! ListModel).updatedDate) {
+                                directionSynchronization = DirectionSynchronization.dataInGoogle
+                                object = dataObjectList as? ListTasks
+                            }
+                            if  ((currGoogleObjectsList[0] as! ListModel).updatedDate) > (dataObjectList.updatedDate)! {
+                                directionSynchronization = DirectionSynchronization.googleInData
+                                object = currGoogleObjectsList[0] as? ListModel as AnyObject?
+                                googleListsModifi.append((currGoogleObjectsList[0] as? ListModel)!)
+                            }
                         }
-                        if (currDataObjectList.updatedDate)! > ((googleObjectList as! ListModel).updatedDate) {
-                            directionModifiListDataGoogle = true
-                            directionModifiTaskDataGoogle = true
-                        }
+                        
+                    } else {
+                        directionSynchronization = DirectionSynchronization.dataInGoogle
+                        actions = Actions.add
+                        object = dataObjectList as? ListTasks
                     }
                     
-                    // data in google
-                    if directionModifiListDataGoogle, currDataObjectList != nil { // data in google
-                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectList!])
-                        let currDataObjectsTask = dataObjectsTask.filter {$0.idList == (googleObjectList as! ListModel).id}
-                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectsTask])
+                    listsModifi.append((directionSynchronization: directionSynchronization, object: object!, action: actions))
+                
+                }
+                
+                // google on data and listsModifi
+                for googleObjectList in googleObjectsList {
+                    
+                    //var id = googleObjectList as? ListModel
+                    let currGoogleObjectsList = googleListsModifi.filter {($0 as? ListModel)?.id == (googleObjectList as? ListModel)?.id}
+                    if currGoogleObjectsList.count > 0 {
                         continue
                     }
-                    
-                    // google in data
-                    JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: [googleObjectList!], completion: { (dataObjectsListModifi) in
-                        
-                        }
-                    )
-                    
-                    // tasks else google in data
-                    let currListID = (googleObjectList! as! ListModel).id
-                    let urlStringTasks = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks"
-                    APIService().doRequest(urlString: urlStringTasks, params: nil, accTok: accTok, completion: { (json, error) in
-                        guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
-                        let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
-                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList, completion: { (dataObjectsListModifi) in
-                            
-                        }
-                    )
-                    })
-                } // for list
+                    let currDataObjectsList = dataObjectsListAll.filter {$0.id == (googleObjectList as? ListModel)?.id}
+                    if currDataObjectsList.count > 0 {
+                        continue
+                    }
+                    //listsModifi.append(<#T##newElement: (directionSynchronization: DirectionSynchronization, object: AnyObject, action: Actions)##(directionSynchronization: DirectionSynchronization, object: AnyObject, action: Actions)#>)
+                    //listsModifi.append((directionSynchronization: DirectionSynchronization.googleInData, object: googleObjectList!, action: Actions.delete))
+                }
                 
-//                // надо сделать стереть лишние списки !!
-//                // deleteNoModifi
-//                if dataObjectsListModifi != dataObjectsList {
-//                    let appDelegate =
-//                        UIApplication.shared.delegate as! AppDelegate
-//                    let context = appDelegate.persistentContainer.viewContext
-//                    for dataObjectList in dataObjectsList {
-//                        if !dataObjectsListModifi.contains(dataObjectList) {
-//                            context.delete(dataObjectList)
+                for listModifi in listsModifi {
+                    if listModifi.directionSynchronization == DirectionSynchronization.none {
+                        continue
+                    }
+                    if listModifi.directionSynchronization == DirectionSynchronization.dataInGoogle {
+                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [listModifi.object])
+                        
+                    }
+                    
+                }
+//                // list
+//                for googleObjectList in googleObjectsList {
+//
+////                    var directionModifiListDataGoogle = false
+////                    var directionModifiTaskDataGoogle = false
+//
+//                    let currDataObjectsList = dataObjectsList.filter {$0.id == (googleObjectList as! ListModel).id}
+//                    var currDataObjectList: ListTasks!// = ListTasks()
+//
+//                    // dataObjectsList is true
+//                    if currDataObjectsList.count > 0 {
+//                        currDataObjectList = currDataObjectsList[0]
+//                        //
+//                        //dataObjectsListModifi.append(currDataObjectList)
+//                        //
+//                        if (currDataObjectList.updatedDate)! == ((googleObjectList as! ListModel).updatedDate) {
+//                            continue
 //                        }
+//                        if (currDataObjectList.updatedDate)! > ((googleObjectList as! ListModel).updatedDate) {
+//                            directionSynchronization = DirectionSynchronization.dataInGoogle
+////                            directionModifiListDataGoogle = true
+////                            directionModifiTaskDataGoogle = true
+//                        }
+//                        if  ((googleObjectList as! ListModel).updatedDate) > (currDataObjectList.updatedDate)! {
+//                            directionSynchronization = DirectionSynchronization.googleInData
+////                            directionModifiListDataGoogle = true
+////                            directionModifiTaskDataGoogle = true
+//                        }
+//
+//                    } else { // new data
+//                        directionSynchronization = DirectionSynchronization.googleInData
 //                    }
 //
-//                    ListTasksData.saveObjects()
-//                }
-                
-            }) //APIService().doRequest( 1 list
-            
+//                    // data in google
+//                    if directionSynchronization == DirectionSynchronization.dataInGoogle, currDataObjectList != nil { // data in google
+//                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectList!])
+//                        let currDataObjectsTask = dataObjectsTask.filter {$0.idList == (googleObjectList as! ListModel).id}
+//                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [currDataObjectsTask])
+//                        continue
+//                    }
+//
+//                    // google in data
+//                    JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: [googleObjectList!], completion: { (dataObjectsListModifi) in
+//
+//                        }
+//                    )
+//
+//                    // tasks else google in data
+//                    let currListID = (googleObjectList! as! ListModel).id
+//                    let urlStringTasks = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks"
+//                    APIService().doRequest(urlString: urlStringTasks, params: nil, accTok: accTok, completion: { (json, error) in
+//                        guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
+//                        let jsonTasksOfList = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "task", idObjects: "")
+//                        JsonGoogle.googleObjectsInDataObjects(accTok: accTok, googleObjects: jsonTasksOfList, completion: { (dataObjectsListModifi) in
+//
+//                        }
+//                    )
+//                    })
+//                } // for list
+//
+////                // надо сделать стереть лишние списки !!
+////                // deleteNoModifi
+////                if dataObjectsListModifi != dataObjectsList {
+////                    let appDelegate =
+////                        UIApplication.shared.delegate as! AppDelegate
+////                    let context = appDelegate.persistentContainer.viewContext
+////                    for dataObjectList in dataObjectsList {
+////                        if !dataObjectsListModifi.contains(dataObjectList) {
+////                            context.delete(dataObjectList)
+////                        }
+////                    }
+////
+////                    ListTasksData.saveObjects()
+////                }
+//
+        }) //APIService().doRequest( 1 list
+//
         } catch let error {
          print(error)
         }
