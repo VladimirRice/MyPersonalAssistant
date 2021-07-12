@@ -146,7 +146,7 @@ class APIService {
                         let json = try! JSON(data: data)
                         if json != nil {
                             //self.navigationController?.popViewControllerAnimated(true)
-                            print(json)
+                            //print(json)
                         }
                         else {
                             print("nil json")
@@ -157,6 +157,85 @@ class APIService {
                     }
             }
     }
+    
+    func doRequestDelete(urlString: String, params: [String: String]?, accTok: String) {
+        var params = params
+        if params == nil && accTok != nil {
+            params = [
+                "Bearer \(accTok)": "Authorization",
+                "application/json": "Accept"
+            ]
+        }
+        //params += paramsBody
+        
+        let url = URL(string: urlString)
+        var request = URLRequest(url: url! as URL)
+        request.httpMethod = "DELETE"
+        //request.httpMethod = "PUT"
+        //        request.httpMethod = "GET"
+        //request.httpMethod = "POST"
+        for param in params! {
+            request.addValue(param.key, forHTTPHeaderField: param.value)
+        }
+        
+        AF.request(request)
+            .responseJSON { response in
+                //Utils.endRequest(progressView)
+                if let data = response.data {
+                    let json = try! JSON(data: data)
+                    if json != nil {
+                        //self.navigationController?.popViewControllerAnimated(true)
+                        //print(json)
+                    }
+                    else {
+                        print("nil json")
+                    }
+                }
+                else {
+                    print("nil data")
+                }
+            }
+    }
+    
+    func doRequestPost(urlString: String, params: [String: String]?, accTok: String, paramsBody: [String: String]) {
+        var params = params
+        if params == nil && accTok != nil {
+            params = [
+                "Bearer \(accTok)": "Authorization",
+                "application/json": "Accept"
+            ]
+        }
+        //params += paramsBody
+        
+        let url = URL(string: urlString)
+        var request = URLRequest(url: url! as URL)
+        request.httpMethod = "POST"
+
+        for param in params! {
+            request.addValue(param.key, forHTTPHeaderField: param.value)
+        }
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
+        request.httpBody = jsonData
+        
+        AF.request(request).responseJSON { response in
+                    //Utils.endRequest(progressView)
+                    if let data = response.data {
+                        let json = try! JSON(data: data)
+                        if json != nil {
+                            //self.navigationController?.popViewControllerAnimated(true)
+                            //print(json)
+                        }
+                        else {
+                            print("nil json")
+                        }
+                    }
+                    else {
+                        print("nil data")
+                    }
+            }
+    }
+    
     
     
 //    let urlString = "https://example.org/some/api"
