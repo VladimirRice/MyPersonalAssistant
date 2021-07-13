@@ -311,7 +311,10 @@ class JsonGoogle {
                     let paramsBody: [String : String] = ["id":  String(dataObject.id!), "title": dataObject.name!, "updated": updatedDate]
                     //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
                     //DispatchQueue.main.async {
-                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody)
+                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
+                        
+                    })
+                    
                     //}
                     continue
                 }

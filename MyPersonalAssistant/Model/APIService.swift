@@ -197,7 +197,7 @@ class APIService {
             }
     }
     
-    func doRequestPost(urlString: String, params: [String: String]?, accTok: String, paramsBody: [String: String]) {
+    func doRequestPost(urlString: String, params: [String: String]?, accTok: String, paramsBody: [String: String], completion: @escaping (Any?, Error?) -> ()) {
         var params = params
         if params == nil && accTok != nil {
             params = [
@@ -219,32 +219,34 @@ class APIService {
         let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
         request.httpBody = jsonData
         
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) {data, response, error in
-            
-            if error != nil {
-                print("error=\(error)")
-                //completion(false)
-                return
-            }
-            
-            let responseString = NSString(data: data!, encoding:            String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
-            //completion(true)
-            return
-        }
-        task.resume()
+//        let session = URLSession.shared
+//        let task = session.dataTask(with: request) {data, response, error in
+//
+//            if error != nil {
+//                print("error=\(error)")
+//                //completion(false)
+//                return
+//            }
+//
+//            let responseString = NSString(data: data!, encoding:            String.Encoding.utf8.rawValue)
+//            print("responseString = \(responseString)")
+//            //completion(true)
+//            return
+//        }
+//        task.resume()
 
         
-//        AF.request(request).responseJSON { response in
-//
-//            switch response.result {
-//            case .success(let result):
-//                let json = JSON(response.data)
-//                //completion(json, nil)
-//            case .failure(let error): break
-//                //completion(nil, error)
-//            }
+        AF.request(request).responseJSON { response in
+
+            switch response.result {
+            case .success(let result):
+                let json = JSON(response.data)
+                completion(json, nil)
+            case .failure(let error): break
+                completion(nil, error)
+            }
+        }
+        
 //
 //
 ////                    //Utils.endRequest(progressView)
