@@ -210,6 +210,7 @@ class APIService {
         let url = URL(string: urlString)
         var request = URLRequest(url: url! as URL)
         request.httpMethod = "POST"
+        //request.httpMethod = "GET"
 
         for param in params! {
             request.addValue(param.key, forHTTPHeaderField: param.value)
@@ -218,22 +219,49 @@ class APIService {
         let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
         request.httpBody = jsonData
         
-        AF.request(request).responseJSON { response in
-                    //Utils.endRequest(progressView)
-                    if let data = response.data {
-                        let json = try! JSON(data: data)
-                        if json != nil {
-                            //self.navigationController?.popViewControllerAnimated(true)
-                            //print(json)
-                        }
-                        else {
-                            print("nil json")
-                        }
-                    }
-                    else {
-                        print("nil data")
-                    }
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) {data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                //completion(false)
+                return
             }
+            
+            let responseString = NSString(data: data!, encoding:            String.Encoding.utf8.rawValue)
+            print("responseString = \(responseString)")
+            //completion(true)
+            return
+        }
+        task.resume()
+
+        
+//        AF.request(request).responseJSON { response in
+//
+//            switch response.result {
+//            case .success(let result):
+//                let json = JSON(response.data)
+//                //completion(json, nil)
+//            case .failure(let error): break
+//                //completion(nil, error)
+//            }
+//
+//
+////                    //Utils.endRequest(progressView)
+////                    if let data = response.data {
+////                        let json = try! JSON(data: data)
+////                        if json != nil {
+////                            //self.navigationController?.popViewControllerAnimated(true)
+////                            //print(json)
+////                        }
+////                        else {
+////                            print("nil json")
+////                        }
+////                    }
+////                    else {
+////                        print("nil data")
+////                    }
+//            }
     }
     
     

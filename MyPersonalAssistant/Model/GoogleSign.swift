@@ -204,11 +204,13 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
             let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
             //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(listID)"
             
+            var googleObjectsList: [ListModel] = []
+            
             APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
                 guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
                 let googleListFromJson = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "list", idObjects: listID)
-                let googleObjectsList = googleListFromJson
-                
+                googleObjectsList += (googleListFromJson as? [ListModel])!
+            //})
                 //var deleteObjectsNoModifi = true
                 
                 let dataObjectsListAll = ListTasksData.dataLoad(strPredicate: "", filter: "")
@@ -261,14 +263,20 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
                     for dataObjectList in dataObjectsList {
                         let currGoogleObjectsList = googleObjectsList.filter {($0 as? ListModel)?.id == (dataObjectList as? ListTasks)!.id}
                         // add
+                        var isNew = false
                         if currGoogleObjectsList.count == 0 {
-                            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
-                            let updatedDate = Functions.dateToStringFormat(date: dataObjectList.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
-                            let paramsBody: [String : String] = ["id":  String(dataObjectList.id!), "title": dataObjectList.name!, "updated": updatedDate]
-                            //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
-                            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody)
+//                            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+//                            let updatedDate = Functions.dateToStringFormat(date: dataObjectList.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+//                            let paramsBody: [String : String] = ["id":  String(dataObjectList.id!), "title": dataObjectList.name!, "updated": updatedDate]
+//                            //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
+//                            //DispatchQueue.main.async {
+//                            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody)
+//                            //}
+                            isNew = true
+                            continue
                         }
-                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList])
+                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
+                        
                         let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
                         JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)
                     }

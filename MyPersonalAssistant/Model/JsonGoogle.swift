@@ -281,7 +281,7 @@ class JsonGoogle {
         
     }
     
-    class func dataObjectsInGoogleObjects(accTok: String, dataObjects: [Any]) {
+    class func dataObjectsInGoogleObjects(accTok: String, dataObjects: [Any], isNew: Bool? = false) {
         
         var vid = ""
         //        guard let dataObjectsList = dataObjects as? [ListModel], let dataObjectsTask = dataObjects as? [TaskModel] else {
@@ -305,6 +305,16 @@ class JsonGoogle {
             
             for dataObject in currDataObjects {
                 
+                if isNew == true {
+                    let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+                    let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+                    let paramsBody: [String : String] = ["id":  String(dataObject.id!), "title": dataObject.name!, "updated": updatedDate]
+                    //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
+                    //DispatchQueue.main.async {
+                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody)
+                    //}
+                    continue
+                }
                 //let currId = dataObject.id
                 let currListID = dataObject.id!
                 
@@ -315,11 +325,7 @@ class JsonGoogle {
                 //let paramsBody: [String : String] = ["name": dataObject.name!]
                 //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
                 let paramsBody: [String : String] = ["name": dataObject.name!, "updated": updatedDate]
-
-                                
                 APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
-                
-
             }
         }
         
