@@ -314,7 +314,6 @@ class JsonGoogle {
                     APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
                         
                     })
-                    
                     //}
                     continue
                 }

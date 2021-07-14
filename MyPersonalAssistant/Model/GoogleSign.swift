@@ -206,6 +206,20 @@ func googleSynchronNext(selfVC: UIViewController, listID: String) {
             
             var googleObjectsList: [ListModel] = []
             
+//            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+//            let id = "MTc1MjI3NjM3MDg4MzU1NjExMDg6MTc2ODk2MzM0OjA"
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+//            let vupdatedDate = formatter.date(from: "2021-07-01T00:01")
+//
+//            let updatedDate = Functions.dateToStringFormat(date: vupdatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+//            let paramsBody: [String : String] = ["id":  id, "title": "Proch", "updated": updatedDate]
+//            //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
+//            //DispatchQueue.main.async {
+//            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
+//             })
+
+            
             APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
                 guard let jsonOfRequest = json as? JSON else {print("\(String(describing: error))"); return}
                 let googleListFromJson = JsonGoogle.parseJsonInObjects(json: jsonOfRequest, vidObjects: "list", idObjects: listID)

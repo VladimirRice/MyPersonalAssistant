@@ -215,6 +215,7 @@ class APIService {
         for param in params! {
             request.addValue(param.key, forHTTPHeaderField: param.value)
         }
+        //request.encoding: JSONEncoding.default
         
         let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
         request.httpBody = jsonData
@@ -235,17 +236,41 @@ class APIService {
 //        }
 //        task.resume()
 
-        
-        AF.request(request).responseJSON { response in
-
-            switch response.result {
-            case .success(let result):
-                let json = JSON(response.data)
-                completion(json, nil)
-            case .failure(let error): break
-                completion(nil, error)
+        var params1 = params// + paramsBody
+//        for paramsBody1 in paramsBody {
+//            params1!.updateValue(paramsBody1.value, forKey: paramsBody1.key)
+//        }
+        AF.request(urlString, method: .post, parameters: params1, encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
+                do {
+                    guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
+                        print("Error: Cannot convert data to JSON object")
+                        return
+                    }
+                    guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
+                        print("Error: Cannot convert JSON object to Pretty JSON data")
+                        return
+                    }
+                    guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
+                        print("Error: Could print JSON in String")
+                        return
+                    }
+                    
+                    print(prettyPrintedJson)
+                } catch {
+                    print("Error: Trying to convert JSON data to string")
+                    return
+                }
             }
-        }
+//        AF.request(request).responseJSON { response in
+//
+//            switch response.result {
+//            case .success(let result):
+//                let json = JSON(response.data)
+//                completion(json, nil)
+//            case .failure(let error): break
+//                completion(nil, error)
+//            }
+//        }
         
 //
 //
