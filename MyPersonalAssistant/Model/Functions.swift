@@ -145,6 +145,15 @@ class Functions {
     label.attributedText = NSAttributedString(string: text!, attributes: attributes)
 }
 
+    class func emptyDate(dateFormat: String?) -> Date {
+        var dateFormat = dateFormat
+        if dateFormat == nil {
+            dateFormat = "yyyy/MM/dd HH:mm"
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        return formatter.date(from: "1900/01/01 00:01")!
+    }
     // format 0: 27.11.2019 07:56:13
     // format 1: 2019.11.27 07:56:13
     class func dateFromString(dateStr: String, format: Int = 0) -> (Date?) {
@@ -521,6 +530,7 @@ extension Date {
         let today = self//.startOfDay
         return Calendar.current.date(byAdding: .day, value: nextValue, to: today)!
     }
+    
 }
 
 //func alertShort (selfVC: UIViewController, title: String, message: String) {

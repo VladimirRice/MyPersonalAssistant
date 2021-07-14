@@ -201,66 +201,81 @@ class APIService {
         var params = params
         if params == nil && accTok != nil {
             params = [
-                "Bearer \(accTok)": "Authorization",
-                "application/json": "Accept"
+                "Bearer \(accTok)": "Authorization"
+                //,"application/json": "Accept"
             ]
         }
-        //params += paramsBody
         
         let url = URL(string: urlString)
         var request = URLRequest(url: url! as URL)
         request.httpMethod = "POST"
+ //       request.httpMethod = HTTPMethod.post.rawValue
         //request.httpMethod = "GET"
 
         for param in params! {
             request.addValue(param.key, forHTTPHeaderField: param.value)
         }
-        //request.encoding: JSONEncoding.default
+    
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
+        //let jsonData = try? JSONSerialization.data(withJSONObject: paramsBody)
+        let data = try! JSONSerialization.data(withJSONObject: paramsBody, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        if let json = json {
+            print(json)
+        }
+        let jsonData = json!.data(using: String.Encoding.utf8.rawValue)
         request.httpBody = jsonData
+        
+        
         
 //        let session = URLSession.shared
 //        let task = session.dataTask(with: request) {data, response, error in
 //
 //            if error != nil {
 //                print("error=\(error)")
-//                //completion(false)
+//                //completion(nil, error)
 //                return
 //            }
 //
 //            let responseString = NSString(data: data!, encoding:            String.Encoding.utf8.rawValue)
 //            print("responseString = \(responseString)")
-//            //completion(true)
+//            let json = try! JSON(data: data!)
+//            completion(json, nil)
 //            return
 //        }
-//        task.resume()
-
-        var params1 = params// + paramsBody
-//        for paramsBody1 in paramsBody {
-//            params1!.updateValue(paramsBody1.value, forKey: paramsBody1.key)
+        //        task.resume()
+        
+////        var params1 = params// + paramsBody
+////        for paramsBody1 in paramsBody {
+////            params1!.updateValue(paramsBody1.value, forKey: paramsBody1.key)
+////        }
+//        let headers: HTTPHeaders = [
+//            "Authorization": "Bearer \(accTok)"
+//            //"Content-Type": "application/x-www-form-urlencoded"
+//        ]
+//        AF.request(urlString, method: .post, parameters: paramsBody, encoding: JSONEncoding.default, headers: headers).validate(statusCode: 200 ..< 299).responseJSON { response in
+//            do {
+//                guard let jsonObject = try JSONSerialization.jsonObject(with: response.data!) as? [String: Any] else {
+//                    print("Error: Cannot convert data to JSON object")
+//                    return
+//                }
+//                guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
+//                    print("Error: Cannot convert JSON object to Pretty JSON data")
+//                    return
+//                }
+//                guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
+//                    print("Error: Could print JSON in String")
+//                    return
+//                }
+//
+//                print(prettyPrintedJson)
+//            } catch {
+//                print("Error: Trying to convert JSON data to string")
+//                return
+//            }
 //        }
-        AF.request(urlString, method: .post, parameters: params1, encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
-                do {
-                    guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
-                        print("Error: Cannot convert data to JSON object")
-                        return
-                    }
-                    guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-                        print("Error: Cannot convert JSON object to Pretty JSON data")
-                        return
-                    }
-                    guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-                        print("Error: Could print JSON in String")
-                        return
-                    }
-                    
-                    print(prettyPrintedJson)
-                } catch {
-                    print("Error: Trying to convert JSON data to string")
-                    return
-                }
-            }
+        
+        
 //        AF.request(request).responseJSON { response in
 //
 //            switch response.result {
