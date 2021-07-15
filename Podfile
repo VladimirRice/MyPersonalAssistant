@@ -12,7 +12,8 @@ target 'MyPersonalAssistant' do
   pod 'Alamofire'
   pod 'SSZipArchive'
   pod 'TinyConstraints'
-
+  # pod  'Moya'
+  
   # pod 'ZIPFoundation'
   # Pods for MyPersonalAssistant
   # pod 'GTMAppAuth'         

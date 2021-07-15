@@ -26,6 +26,18 @@ struct ListModel {
 //    }
 }
 
+struct ListCol: Codable {
+    var id: String?
+    var title: String?
+    var updated: String?
+}
+
+struct ListsCol: Codable {
+    var kind : String?
+    var etag : String?
+    var items : [ListCol]
+}
+
 //@objcMembers
 //class ListModel0: NSObject {
 //    dynamic var name = ""
@@ -52,6 +64,8 @@ struct ListModel {
 ////        self.photo50 = data.photo_50.string
 ////    }
 //}
+
+
 
 class ListTasksData {
     //var arrayObjects: [ListTasks]

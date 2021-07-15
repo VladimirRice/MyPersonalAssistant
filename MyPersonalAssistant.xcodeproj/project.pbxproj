@@ -73,6 +73,9 @@
 		FD3F01A925EB7AAA0062B040 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3F01A825EB7AAA0062B040 /* ComplicationController.swift */; };
 		FD3F01AB25EB7AAA0062B040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD3F01AA25EB7AAA0062B040 /* Assets.xcassets */; };
 		FD3F01B025EB7AAA0062B040 /* TasksWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FD3F019125EB7AA90062B040 /* TasksWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FD51DF17269FCDC40022B3E9 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD51DF13269FCDC40022B3E9 /* API.swift */; };
+		FD51DF18269FCDC40022B3E9 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD51DF15269FCDC40022B3E9 /* Endpoint.swift */; };
+		FD51DF19269FCDC40022B3E9 /* PostEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD51DF16269FCDC40022B3E9 /* PostEndpoint.swift */; };
 		FD7000B7268C11CE007AA16E /* JsonOfFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7000B6268C11CE007AA16E /* JsonOfFile.swift */; };
 		FD746E35267D5FA700D0ACC3 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD746E34267D5FA700D0ACC3 /* APIService.swift */; };
 		FD9D61D825D109E500EC2EA6 /* EMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D61D725D109E500EC2EA6 /* EMail.swift */; };
@@ -204,6 +207,9 @@
 		FD3F01AA25EB7AAA0062B040 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD3F01AC25EB7AAA0062B040 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD3F01AD25EB7AAA0062B040 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		FD51DF13269FCDC40022B3E9 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		FD51DF15269FCDC40022B3E9 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		FD51DF16269FCDC40022B3E9 /* PostEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostEndpoint.swift; sourceTree = "<group>"; };
 		FD7000B6268C11CE007AA16E /* JsonOfFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonOfFile.swift; sourceTree = "<group>"; };
 		FD746E34267D5FA700D0ACC3 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		FD9D61D725D109E500EC2EA6 /* EMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMail.swift; sourceTree = "<group>"; };
@@ -289,6 +295,7 @@
 				9FB303BB25944763003F78BA /* Progress */,
 				9F7477B825823320005AA02D /* CoreData */,
 				9F7477B025823320005AA02D /* Model */,
+				FD51DF12269FCDC40022B3E9 /* NetworkingLayer */,
 				9F7A11462582383800DA8AE7 /* Help */,
 				9F7477C225823320005AA02D /* Controllers */,
 				9F7476C225823039005AA02D /* LaunchScreen.storyboard */,
@@ -472,6 +479,24 @@
 				FD3F01AD25EB7AAA0062B040 /* PushNotificationPayload.apns */,
 			);
 			path = "TasksWatch Extension";
+			sourceTree = "<group>";
+		};
+		FD51DF12269FCDC40022B3E9 /* NetworkingLayer */ = {
+			isa = PBXGroup;
+			children = (
+				FD51DF13269FCDC40022B3E9 /* API.swift */,
+				FD51DF14269FCDC40022B3E9 /* Endpoints */,
+			);
+			path = NetworkingLayer;
+			sourceTree = "<group>";
+		};
+		FD51DF14269FCDC40022B3E9 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				FD51DF15269FCDC40022B3E9 /* Endpoint.swift */,
+				FD51DF16269FCDC40022B3E9 /* PostEndpoint.swift */,
+			);
+			path = Endpoints;
 			sourceTree = "<group>";
 		};
 		FDF3595225AF093F000D46C3 /* SimpleReferenceBooks */ = {
@@ -735,6 +760,7 @@
 				9F74780425823320005AA02D /* QRScannerController.swift in Sources */,
 				9F74781125823320005AA02D /* ContainerViewController.swift in Sources */,
 				9F74781525823320005AA02D /* FileTextViewController.swift in Sources */,
+				FD51DF18269FCDC40022B3E9 /* Endpoint.swift in Sources */,
 				9F7477F525823320005AA02D /* MyPersonalAssistant.xcdatamodeld in Sources */,
 				9F74780A25823320005AA02D /* PickerDateViewController.swift in Sources */,
 				9F74780125823320005AA02D /* AboutTableViewController.swift in Sources */,
@@ -758,6 +784,7 @@
 				9F74780B25823320005AA02D /* SnipTableViewCell.swift in Sources */,
 				9F7477F725823320005AA02D /* TextNameViewController.swift in Sources */,
 				9F7476B725823039005AA02D /* SceneDelegate.swift in Sources */,
+				FD51DF17269FCDC40022B3E9 /* API.swift in Sources */,
 				9F7477E925823320005AA02D /* Functions.swift in Sources */,
 				9F7477E825823320005AA02D /* ListModel.swift in Sources */,
 				9F7477FA25823320005AA02D /* ListTasksTableViewCell.swift in Sources */,
@@ -770,6 +797,7 @@
 				9F74780925823320005AA02D /* PickerOneViewController.swift in Sources */,
 				9F7477F825823320005AA02D /* SettingsTableViewController.swift in Sources */,
 				9F7477F925823320005AA02D /* TasksViewController.swift in Sources */,
+				FD51DF19269FCDC40022B3E9 /* PostEndpoint.swift in Sources */,
 				9F7477F125823320005AA02D /* Tasks+CoreDataProperties.swift in Sources */,
 				9F7477EF25823320005AA02D /* ListTasks+CoreDataClass.swift in Sources */,
 				9F74780825823320005AA02D /* PickerViewController.swift in Sources */,
