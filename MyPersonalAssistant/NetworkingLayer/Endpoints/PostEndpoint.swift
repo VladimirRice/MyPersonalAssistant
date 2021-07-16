@@ -7,7 +7,7 @@ enum PostEndpoint: Endpoint {
     case getDataList(accTok: String)
     case postDataList(accTok: String, paramsBody: [String : String])
     case putDataList(accTok: String)
-    case patchDataList(accTok: String, idInPath: String?)
+    case patchDataList(accTok: String, paramsBody: [String : String], idInPath: String?)
     case deleteDataList(accTok: String)
 
     
@@ -47,7 +47,7 @@ enum PostEndpoint: Endpoint {
             return "/tasks/v1/users/@me/lists"
         case .putDataList:
             return "/tasks/v1/users/@me/lists"
-        case .patchDataList(let accTok, let idInPath):
+        case .patchDataList(let accTok, let paramsBody, let idInPath):
             return "/tasks/v1/users/@me/lists/\(String(describing: idInPath))/"
         case .deleteDataList:
             return "/posts/1"
@@ -94,7 +94,7 @@ enum PostEndpoint: Endpoint {
 //                    ,URLQueryItem(name: "Accept", value: "application/json")
 //                ]
             
-        case .patchDataList(let accTok, let idInPath):
+        case .patchDataList(let accTok, let paramsBody, let idInPath):
             return []
 //                [
 //                    URLQueryItem(name: "Authorization", value: "Bearer \(accTok)")
@@ -115,8 +115,8 @@ enum PostEndpoint: Endpoint {
         case .putDataList:
             return ["title": "Foo",
                     "body": "Bar"]
-        case .patchDataList:
-            return ["title": "Foo"]
+        case .patchDataList(let accTok, let paramsBody, let idInPath):
+            return paramsBody
         case .deleteDataList:
             return [:]
         }
@@ -139,13 +139,17 @@ enum PostEndpoint: Endpoint {
             //return ["application/json":"Content-Type"]
             return [
                 "Authorization":"Bearer \(accTok)"
-                ,"Accept":"application/json"
+                //,"Accept":"application/json"
             ]
 
         case .putDataList:
             return ["application/json":"Content-type"]
-        case .patchDataList:
-            return ["application/json":"Content-type"]
+        case .patchDataList(let accTok, let paramsBody, let idInPath):
+            return [
+                "Authorization":"Bearer \(accTok)"
+                ,"Accept":"application/json"
+            ]
+
         case .deleteDataList:
             return [:]
         }

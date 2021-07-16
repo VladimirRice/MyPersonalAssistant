@@ -82,7 +82,7 @@ func googleSynchron(selfVC: UIViewController?, listID: String) -> Bool {
             alertController.addAction(UIAlertAction(title: "ВСЕ", style: UIAlertAction.Style.default, handler: { [weak alertController] (action) -> Void in
 
                 //googleSynchronNext(selfVC: selfVC!, listID: "")
-                googleSynchronNextAPI(selfVC: selfVC!, listID: listID)
+                googleSynchronNextAPI(selfVC: selfVC!, listID: "")
                 //googleSynchronNextAPIService(selfVC: selfVC, listID: listID)
                 //status = true
             }
@@ -261,11 +261,9 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
         //        var jsonTasks: [Any] = []
         do {
             // list
-            let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
-            //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(listID)"
-            var googleObjectsList: [ListModel] = []
+            
+//            //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 //
-//            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 //            let id = "MTc1MjI3NjM3MDg4MzU1NjExMDg6MTc2ODk2MzM0OjA"
 //            let formatter = DateFormatter()
 //            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
@@ -275,21 +273,32 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 //            let paramsBody: [String : String] = ["id":  id, "title": "Proch", "updated": updatedDate]
 //            //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
 //            //DispatchQueue.main.async {
-//            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
-//                let json1 = json
-//             })
+////            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
+////                let json1 = json
+////             })
+//            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCol, Error>) in
+//            //API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCol, Error>) in
+//                switch result {
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    return
+//                case .success(let objects):
+//                    print(objects)
+//                    //objectsFromJson = objects.items
+//                }
+//            }
 
-  //return
-    
-            
+        
+            var googleObjectsList: [ListModel] = []
             //APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
             API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCol, Error>) in
                
-                var objectsFromJson: [ListCol]
+                var objectsFromJson: [ListCol] = []
                 
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
+                    return
                 case .success(let objects):
                     print(objects)
                     objectsFromJson = objects.items
@@ -365,8 +374,27 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 //                            //DispatchQueue.main.async {
 //                            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody)
 //                            //}
+                            
+//                            let updatedDate = Functions.dateToStringFormat(date: dataObjectList.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
+//                            let paramsBody: [String : String] = ["id":  String(dataObjectList.id!), "title": dataObjectList.name!, "updated": updatedDate]
+//                            //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
+//                            //DispatchQueue.main.async {
+//        //                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
+//        //
+//        //                    })
+//                            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCol, Error>) in
+//                               
+//                                switch result {
+//                                case .failure(let error):
+//                                    print(error.localizedDescription)
+//                                    return
+//                                case .success(let objects):
+//                                    print(objects)
+//                                    //objectsFromJson = objects.items
+//                                }
+//                            }
+
                             isNew = true
-                        //    continue
                         }
                         JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
 

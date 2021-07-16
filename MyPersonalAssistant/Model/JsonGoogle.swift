@@ -306,30 +306,58 @@ class JsonGoogle {
             for dataObject in currDataObjects {
                 
                 if isNew == true {
-                    let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+                    //let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
                     let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
                     let paramsBody: [String : String] = ["id":  String(dataObject.id!), "title": dataObject.name!, "updated": updatedDate]
                     //let paramsBody: [String : String] = ["title": dataObjectList.name!, "updated": updatedDate]
                     //DispatchQueue.main.async {
-                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
-                        
-                    })
-                    //}
+//                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
+//
+//                    })
+                    API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCol, Error>) in
+                       
+                        switch result {
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        case .success(let objects):
+                            print(objects)
+                            //objectsFromJson = objects.items
+                        }
+                    }
+
                     continue
                 }
                 //let currId = dataObject.id
                 let currListID = dataObject.id!
                 
-                let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
+                //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
                 let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
                 
                 //let paramsBody = ["name": dataObject.name, "updatedDate": updatedDate] as [String : String]
                 //let paramsBody: [String : String] = ["name": dataObject.name!]
                 //let paramsBody = "{ \"status\": \"needsAction\", \"updatedDate\": \"\(updatedDate)\"}"
                 let paramsBody: [String : String] = ["name": dataObject.name!, "updated": updatedDate]
-                APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
+                //APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
+                API.request(endpoint: PostEndpoint.patchDataList(accTok: accTok, paramsBody: paramsBody, idInPath: currListID)) { (result: Result<ListsCol, Error>) in
+                   
+                    //var objectsFromJson: [ListCol] = []
+                    
+                    switch result {
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        return
+                    case .success(let objects):
+                        print(objects)
+                        //objectsFromJson = objects.items
+                    }
+                }
+
             }
         }
+        
+        return
+        
         
         // task
         if let dataObjectsTask = dataObjects as? [Tasks] {
