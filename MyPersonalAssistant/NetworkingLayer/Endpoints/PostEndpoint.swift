@@ -139,7 +139,7 @@ enum PostEndpoint: Endpoint {
             //return ["application/json":"Content-Type"]
             return [
                 "Authorization":"Bearer \(accTok)"
-                //,"Accept":"application/json"
+                ,"Accept":"application/json"
             ]
 
         case .putDataList:

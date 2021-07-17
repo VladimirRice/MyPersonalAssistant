@@ -289,7 +289,7 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 //            }
 
         
-            var googleObjectsList: [ListModel] = []
+            //var googleObjectsList: [ListModel] = []
             //APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
             API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCol, Error>) in
                
@@ -343,9 +343,12 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                         maxUpdatedDateData = updateDate
                     }
                 }
-                for googleObjectList in googleObjectsList {
-                    let updateDate = ((googleObjectList as? ListModel)?.updatedDate)!
-                    if updateDate > maxUpdatedDateGoogle!  {
+                for googleObjectList in objectsFromJson { //in googleObjectsList {
+                    var strDate = googleObjectList.updated!
+                    strDate.replaceOccurrences(of: "-", with: ".")
+                    strDate.replaceOccurrences(of: "T", with: " ")
+                    let updateDate = Functions.dateFromString(dateStr: strDate, format: 1)
+                    if updateDate! > maxUpdatedDateGoogle!  {
                         maxUpdatedDateGoogle = updateDate
                     }
                 }
@@ -363,7 +366,7 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                 if directionSynchronization == DirectionSynchronization.dataInGoogle {
                     // data
                     for dataObjectList in dataObjectsList {
-                        let currGoogleObjectsList = googleObjectsList.filter {($0 as? ListModel)?.id == (dataObjectList as? ListTasks)!.id}
+                        let currGoogleObjectsList = objectsFromJson.filter {($0 as? ListCol)?.id == (dataObjectList as? ListTasks)!.id}
                         // add
                         var isNew = false
                         if currGoogleObjectsList.count == 0 {
@@ -398,19 +401,20 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                         }
                         JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
 
-                        let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
-                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)
-                    }
+//                        let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
+//                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)
+                        
+                    } //if directionSynchronization == DirectionSynchronization.dataInGoogle {
 
                     // google
-                    for googleObjectList in googleObjectsList {
-                        let currDataObjectsList = dataObjectsListAll.filter {$0.id == (googleObjectList as? ListModel)?.id}
+                    for googleObjectList in objectsFromJson { //in googleObjectsList {
+                        let currDataObjectsList = dataObjectsListAll.filter {$0.id == (googleObjectList as? ListCol)?.id}
                         if currDataObjectsList.count > 0 {
                             continue
                         }
 
                         // delete
-                        let currListID = (googleObjectList as? ListModel)?.id
+                        let currListID = (googleObjectList as? ListCol)?.id
                         let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(String(describing: currListID))/"
                         APIService().doRequestDelete(urlString: urlString, params: nil, accTok: accTok)
                     }

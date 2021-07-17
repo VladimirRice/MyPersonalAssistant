@@ -13,11 +13,16 @@ class API {
         //url parameters
         components.queryItems = endpoint.urlParameters
         
-        guard let url = components.url else { return }
+        guard var url = components.url else { return }
         
 //        //
-//        let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
-//        let url = URL(string: urlString)!
+        if endpoint.method.rawValue == "POST" {
+            let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
+            url = URL(string: urlString)!
+//        } else {
+//            guard let url = components.url else { return }
+        }
+        
 //        //
         
         var request = URLRequest(url: url)
