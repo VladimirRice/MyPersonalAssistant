@@ -276,8 +276,8 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 ////            APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
 ////                let json1 = json
 ////             })
-//            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCol, Error>) in
-//            //API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCol, Error>) in
+//            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCodable, Error>) in
+//            //API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCodable, Error>) in
 //                switch result {
 //                case .failure(let error):
 //                    print(error.localizedDescription)
@@ -291,9 +291,9 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
         
             //var googleObjectsList: [ListModel] = []
             //APIService().doRequest(urlString: urlString, params: nil, accTok: accTok, completion: { (json, error) in
-            API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCol, Error>) in
+            API.request(endpoint: PostEndpoint.getDataList(accTok: accTok)) { (result: Result<ListsCodable, Error>) in
                
-                var objectsFromJson: [ListCol] = []
+                var objectsFromJson: [ListCodable] = []
                 
                 switch result {
                 case .failure(let error):
@@ -327,34 +327,31 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                     dataObjectsTask = dataObjectsTaskAll.filter { $0.idList == listID }
                 }
 
-                // compare date
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-//                let emptyDate = formatter.date(from: "1900/01/01 00:01")
-                let emptyDate = Functions.emptyDate(dateFormat: nil)
-                
-                var maxUpdatedDateData: Date? = emptyDate
-                var maxUpdatedDateGoogle: Date? = emptyDate
-
-
-                for dataObjectList in dataObjectsList {
-                    let updateDate = dataObjectList.updatedDate!
-                    if updateDate > maxUpdatedDateData!  {
-                        maxUpdatedDateData = updateDate
-                    }
-                }
-                for googleObjectList in objectsFromJson { //in googleObjectsList {
-                    var strDate = googleObjectList.updated!
-                    strDate.replaceOccurrences(of: "-", with: ".")
-                    strDate.replaceOccurrences(of: "T", with: " ")
-                    let updateDate = Functions.dateFromString(dateStr: strDate, format: 1)
-                    if updateDate! > maxUpdatedDateGoogle!  {
-                        maxUpdatedDateGoogle = updateDate
-                    }
-                }
-                if maxUpdatedDateData == maxUpdatedDateGoogle {
-                    return
-                }
+//                // compare date
+//                let emptyDate = Functions.emptyDate(dateFormat: nil)
+//
+//                var maxUpdatedDateData: Date? = emptyDate
+//                var maxUpdatedDateGoogle: Date? = emptyDate
+//
+//
+//                for dataObjectList in dataObjectsList {
+//                    let updateDate = dataObjectList.updatedDate!
+//                    if updateDate > maxUpdatedDateData!  {
+//                        maxUpdatedDateData = updateDate
+//                    }
+//                }
+//                for googleObjectList in objectsFromJson { //in googleObjectsList {
+//                    var strDate = googleObjectList.updated!
+//                    strDate.replaceOccurrences(of: "-", with: ".")
+//                    strDate.replaceOccurrences(of: "T", with: " ")
+//                    let updateDate = Functions.dateFromString(dateStr: strDate, format: 1)
+//                    if updateDate! > maxUpdatedDateGoogle!  {
+//                        maxUpdatedDateGoogle = updateDate
+//                    }
+//                }
+//                if maxUpdatedDateData == maxUpdatedDateGoogle {
+//                    return
+//                }
 
                 var directionSynchronization = DirectionSynchronization.dataInGoogle
 //                if maxUpdatedDateGoogle! > maxUpdatedDateData! {
@@ -366,10 +363,12 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                 if directionSynchronization == DirectionSynchronization.dataInGoogle {
                     // data
                     for dataObjectList in dataObjectsList {
-                        let currGoogleObjectsList = objectsFromJson.filter {($0 as? ListCol)?.id == (dataObjectList as? ListTasks)!.id}
+                        let currGoogleObjectsList = objectsFromJson.filter {($0 as? ListCodable)?.id == (dataObjectList as? ListTasks)!.id}
                         // add
                         var isNew = false
                         if currGoogleObjectsList.count == 0 {
+                            continue
+                            
 //                            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 //                            let updatedDate = Functions.dateToStringFormat(date: dataObjectList.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
 //                            let paramsBody: [String : String] = ["id":  String(dataObjectList.id!), "title": dataObjectList.name!, "updated": updatedDate]
@@ -385,7 +384,7 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 //        //                    APIService().doRequestPost(urlString: urlStringList, params: nil, accTok: accTok, paramsBody: paramsBody, completion: { (json, error) in
 //        //
 //        //                    })
-//                            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCol, Error>) in
+//                            API.request(endpoint: PostEndpoint.postDataList(accTok: accTok, paramsBody: paramsBody)) { (result: Result<ListsCodable, Error>) in
 //                               
 //                                switch result {
 //                                case .failure(let error):
@@ -401,22 +400,22 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                         }
                         JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
 
-//                        let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
-//                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)
+                        let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
+                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)
                         
                     } //if directionSynchronization == DirectionSynchronization.dataInGoogle {
 
                     // google
                     for googleObjectList in objectsFromJson { //in googleObjectsList {
-                        let currDataObjectsList = dataObjectsListAll.filter {$0.id == (googleObjectList as? ListCol)?.id}
+                        let currDataObjectsList = dataObjectsListAll.filter {$0.id == (googleObjectList as? ListCodable)?.id}
                         if currDataObjectsList.count > 0 {
                             continue
                         }
 
                         // delete
-                        let currListID = (googleObjectList as? ListCol)?.id
-                        let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(String(describing: currListID))/"
-                        APIService().doRequestDelete(urlString: urlString, params: nil, accTok: accTok)
+                        let currListID = (googleObjectList as? ListCodable)?.id
+                        //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(String(describing: currListID))/"
+                        //APIService().doRequestDelete(urlString: urlString, params: nil, accTok: accTok)
                     }
                 } // if dataInGoogle
 

@@ -10,6 +10,33 @@ import Foundation
 import  CoreData
 import  UIKit
 
+struct TasksCodable: Codable {
+    var items: [TaskCodable]
+}
+
+struct TaskCodable: Codable {
+    var dateTermination: Date?
+//    var heading = ""
+//    var image0: Data?
+//    var image1: Data?
+//    var image2: Data?
+//    var isClose = false
+//    var listName = ""
+//    var name = ""
+//    var priority: NSNumber?
+//    var id = ""
+//    var idList = ""
+//    var turn = 0
+//    var imageTask: Data?
+//    var updatedDate = Date()
+//    var compare = false
+//    var isEnabled = false
+//    var color: NSNumber?
+//    var status = ""
+//    var category = ""
+    var go = false
+}
+
 class TaskModel {
     var dateTermination: Date?
     var heading = ""

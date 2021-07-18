@@ -26,16 +26,16 @@ struct ListModel {
 //    }
 }
 
-struct ListCol: Codable {
+struct ListCodable: Codable {
     var id: String?
     var title: String?
     var updated: String?
 }
 
-struct ListsCol: Codable {
+struct ListsCodable: Codable {
     var kind : String?
     var etag : String?
-    var items : [ListCol]
+    var items : [ListCodable]
 }
 
 //@objcMembers

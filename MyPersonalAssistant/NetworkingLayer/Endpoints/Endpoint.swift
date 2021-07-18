@@ -16,7 +16,7 @@ protocol Endpoint {
     
     var baseURL: String { get }
     
-    //var idInPath: String { get }
+    //var idList: String { get }
     
     var path: String { get }
     

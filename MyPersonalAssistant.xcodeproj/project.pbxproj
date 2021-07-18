@@ -81,6 +81,7 @@
 		FD9D61D825D109E500EC2EA6 /* EMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D61D725D109E500EC2EA6 /* EMail.swift */; };
 		FDAE8DDB2626720F00AB8569 /* GoogleSign.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAE8DDA2626720F00AB8569 /* GoogleSign.swift */; };
 		FDDCEB9025EDD0B900F0EBDA /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDDCEB8F25EDD0B900F0EBDA /* CloudKit.framework */; };
+		FDF1B91C26A3B84E00366666 /* API+func.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF1B91B26A3B84E00366666 /* API+func.swift */; };
 		FDF3595125AF0931000D46C3 /* ComparisonNomenklaturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF3594F25AF0931000D46C3 /* ComparisonNomenklaturesTableViewCell.swift */; };
 		FDF3595625AF0A17000D46C3 /* SimpleReferenceBooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF3595325AF0A17000D46C3 /* SimpleReferenceBooksTableViewCell.swift */; };
 		FDF3595725AF0A17000D46C3 /* SimpleReferenceBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF3595425AF0A17000D46C3 /* SimpleReferenceBooksViewController.swift */; };
@@ -217,6 +218,7 @@
 		FDB636DA2622BBF70023EDAD /* GoogleAPIClientForREST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GoogleAPIClientForREST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDDCEB8C25EDCDE000F0EBDA /* MyPersonalAssistant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyPersonalAssistant.entitlements; sourceTree = "<group>"; };
 		FDDCEB8F25EDD0B900F0EBDA /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		FDF1B91B26A3B84E00366666 /* API+func.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+func.swift"; sourceTree = "<group>"; };
 		FDF3594F25AF0931000D46C3 /* ComparisonNomenklaturesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComparisonNomenklaturesTableViewCell.swift; sourceTree = "<group>"; };
 		FDF3595325AF0A17000D46C3 /* SimpleReferenceBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleReferenceBooksTableViewCell.swift; sourceTree = "<group>"; };
 		FDF3595425AF0A17000D46C3 /* SimpleReferenceBooksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleReferenceBooksViewController.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				FDAE8DDA2626720F00AB8569 /* GoogleSign.swift */,
 				FD746E34267D5FA700D0ACC3 /* APIService.swift */,
 				9F7477B425823320005AA02D /* JsonGoogle.swift */,
+				FDF1B91B26A3B84E00366666 /* API+func.swift */,
 				FD7000B6268C11CE007AA16E /* JsonOfFile.swift */,
 				9F7477B125823320005AA02D /* ListModel.swift */,
 				FD02EF3025AEE13C0004AFA8 /* CategoryModel.swift */,
@@ -791,6 +794,7 @@
 				9FB303BD25944763003F78BA /* IJProgressView.swift in Sources */,
 				9F74780D25823320005AA02D /* CollectionModel.swift in Sources */,
 				9F7477F325823320005AA02D /* FuncModelCoreData.swift in Sources */,
+				FDF1B91C26A3B84E00366666 /* API+func.swift in Sources */,
 				FDAE8DDB2626720F00AB8569 /* GoogleSign.swift in Sources */,
 				9F7477EA25823320005AA02D /* Files.swift in Sources */,
 				9F7477FE25823320005AA02D /* MainTabBarController.swift in Sources */,

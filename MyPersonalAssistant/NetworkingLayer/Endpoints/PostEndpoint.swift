@@ -7,15 +7,13 @@ enum PostEndpoint: Endpoint {
     case getDataList(accTok: String)
     case postDataList(accTok: String, paramsBody: [String : String])
     case putDataList(accTok: String)
-    case patchDataList(accTok: String, paramsBody: [String : String], idInPath: String?)
+    case patchDataList(accTok: String, paramsBody: [String : String], idList: String?)
     case deleteDataList(accTok: String)
-
-    
-//    case getDataTask
-//    case postDataTask
-//    case putDataTask
-//    case patchDataTask
-//    case deleteDataTask
+    case getDataTask(accTok: String, idList: String)
+    case postDataTask(accTok: String, paramsBody: [String : String])
+    case putDataTask(accTok: String)
+    case patchDataTask(accTok: String, paramsBody: [String : String], idList: String?, idTasks: String)
+    case deleteDataTask(accTok: String)
 
     var scheme: String {
         switch self {
@@ -31,7 +29,7 @@ enum PostEndpoint: Endpoint {
         }
     }
     
-//    var idInPath: String {
+//    var idList: String {
 //        switch self {
 //        default:
 //            return ""
@@ -47,11 +45,23 @@ enum PostEndpoint: Endpoint {
             return "/tasks/v1/users/@me/lists"
         case .putDataList:
             return "/tasks/v1/users/@me/lists"
-        case .patchDataList(let accTok, let paramsBody, let idInPath):
-            return "/tasks/v1/users/@me/lists/\(String(describing: idInPath))/"
+        case .patchDataList(let accTok, let paramsBody, let idList):
+            return "/tasks/v1/users/@me/lists/\(String(describing: idList))/"
         case .deleteDataList:
             return "/posts/1"
+        
+        case .getDataTask(let idList):
+            return "/tasks/v1/lists/\(idList)/tasks"
+        case .postDataTask:
+            return "/tasks/v1/users/@me/lists"
+        case .putDataTask:
+            return "/tasks/v1/users/@me/lists"
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTask):
+            return "/tasks/v1/lists/\(idList)/tasks\(idTask))/"
+        case .deleteDataTask:
+            return "/posts/1"
         }
+
     }
     
     var method: HTTPMethods {
@@ -66,12 +76,22 @@ enum PostEndpoint: Endpoint {
             return .patch
         case .deleteDataList:
             return .delete
+  
+        case .getDataTask:
+            return .get
+        case .postDataTask:
+            return .post
+        case .putDataTask:
+            return .put
+        case .patchDataTask:
+            return .patch
+        case .deleteDataTask:
+            return .delete
         }
     }
     
     var urlParameters: [URLQueryItem] {
         
-        //var parameters = [URLQueryItem(name: "Authorization", value: "Bearer \(accTok)")]
         switch self {
         case .getDataList(let accTok):
             return []
@@ -82,26 +102,25 @@ enum PostEndpoint: Endpoint {
 //                ]
         case .postDataList(let accTok):
             return []
-//                [
-//                    URLQueryItem(name: "Authorization", value: "Bearer \(accTok)")
-//                    ,URLQueryItem(name: "Accept", value: "application/json")
-//                ]
-            
+
         case .putDataList(let accTok):
             return []
-//                [
-//                    URLQueryItem(name: "Authorization", value: "Bearer \(accTok)")
-//                    ,URLQueryItem(name: "Accept", value: "application/json")
-//                ]
             
-        case .patchDataList(let accTok, let paramsBody, let idInPath):
+        case .patchDataList(let accTok, let paramsBody, let idList):
             return []
-//                [
-//                    URLQueryItem(name: "Authorization", value: "Bearer \(accTok)")
-//                    ,URLQueryItem(name: "Accept", value: "application/json")
-//                ]
             
         case .deleteDataList:
+            return []
+            
+        case .getDataTask(let accTok):
+            return []
+        case .postDataTask(let accTok):
+            return []
+        case .putDataTask(let accTok):
+            return []
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+            return []
+        case .deleteDataTask:
             return []
         }
     }
@@ -115,28 +134,34 @@ enum PostEndpoint: Endpoint {
         case .putDataList:
             return ["title": "Foo",
                     "body": "Bar"]
-        case .patchDataList(let accTok, let paramsBody, let idInPath):
+        case .patchDataList(let accTok, let paramsBody, let idList):
             return paramsBody
         case .deleteDataList:
             return [:]
+        
+        case .getDataTask(let idList):
+            return [:]
+        case .postDataTask(let accTok, let paramsBody):
+            return paramsBody
+        case .putDataTask:
+            return ["title": "Foo",
+                    "body": "Bar"]
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+            return paramsBody
+        case .deleteDataTask:
+            return [:]
         }
+
     }
     
     var headers: [String:String] {
         switch self {
-        
         case .getDataList(let accTok):
-        //    return [:]
-//            return [
-//                "Bearer \(accTok)":"Authorization"
-//                ,"application/json": "Accept"
-//            ]
             return [
                 "Authorization":"Bearer \(accTok)"
                 ,"Accept":"application/json"
             ]
         case .postDataList(let accTok, let paramsBody):
-            //return ["application/json":"Content-Type"]
             return [
                 "Authorization":"Bearer \(accTok)"
                 ,"Accept":"application/json"
@@ -144,14 +169,39 @@ enum PostEndpoint: Endpoint {
 
         case .putDataList:
             return ["application/json":"Content-type"]
-        case .patchDataList(let accTok, let paramsBody, let idInPath):
+        case .patchDataList(let accTok, let paramsBody, let idList):
+            return [
+                "Authorization":"Bearer \(accTok)"
+                ,"Accept":"application/json"
+            ]
+        case .deleteDataList:
+            return [:]
+        
+        case .getDataTask(let accTok):
+            return [
+                "Authorization":"Bearer \(accTok)"
+                ,"Accept":"application/json"
+            ]
+        case .postDataTask(let accTok, let paramsBody):
             return [
                 "Authorization":"Bearer \(accTok)"
                 ,"Accept":"application/json"
             ]
 
-        case .deleteDataList:
+        case .putDataTask:
+            return ["application/json":"Content-type"]
+        case .patchDataList(let accTok, let paramsBody, let idList):
+            return [
+                "Authorization":"Bearer \(accTok)"
+                ,"Accept":"application/json"
+            ]
+        case .deleteDataTask:
             return [:]
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+            return [
+                "Authorization":"Bearer \(accTok)"
+                ,"Accept":"application/json"
+            ]
         }
     }
 }
