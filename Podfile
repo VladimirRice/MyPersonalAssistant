@@ -12,6 +12,9 @@ target 'MyPersonalAssistant' do
   pod 'Alamofire'
   pod 'SSZipArchive'
   pod 'TinyConstraints'
+  # pod 'Firebase/Auth'
+  # pod 'Firebase/Firestore'
+
   # pod  'Moya'
   
   # pod 'ZIPFoundation'

@@ -90,10 +90,10 @@ class TasksViewController: UIViewController, UICollectionViewDelegate
         super.viewDidLoad()
         
         // refreshControl
-        refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация задач...")
-        refreshControl.addTarget(self, action: #selector(googleSynchronTarget), for: .valueChanged)
-        //refreshControl.tintColor = .blue
-        tasksViewController.refreshControl = refreshControl
+//        refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация задач...")
+//        refreshControl.addTarget(self, action: #selector(googleSynchronTarget), for: .valueChanged)
+//        //refreshControl.tintColor = .blue
+//        tasksViewController.refreshControl = refreshControl
         
         
         if currentListObject == nil{

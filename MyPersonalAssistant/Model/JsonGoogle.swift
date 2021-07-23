@@ -362,45 +362,67 @@ class JsonGoogle {
         // task
         if let dataObjectsTask = dataObjects as? [Tasks] {
             
-            var currListID = ""
             if dataObjectsTask.count == 0 {
                 return
             }
             
             var jsonTasks: [TaskCodable] = []
-            currListID = dataObjectsTask[0].id!
-//            API.request(endpoint: PostEndpoint.getDataTask(accTok: accTok, idList: currListID)) { (result: Result<TaskCodable, Error>) in
-//              
-//                
-//                //var jsonTasks: [TaskCodable] = []
-//                switch result {
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                    return
-//                case .success(let objects):
-//                    print(objects)
-//                    //jsonTasks = objects//.items
-//                }
-//            } // API
+            let idList = dataObjectsTask[0].idList!
+            API.request(endpoint: PostEndpoint.getDataTask(accTok: accTok, idList: idList)) { (result: Result<TasksCodable, Error>) in
+              
+                
+                //var jsonTasks: [TaskCodable] = []
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    return
+                case .success(let objects):
+                    print(objects)
+                    //jsonTasks = objects//.items
+                    dataObjectsInGoogleObjectsTasks(accTok: accTok, dataObjectsTask: dataObjectsTask, googleObjectsTasks: objects)
+                }
+            } // API
             
-            FunctionsAPI().getDataAPITasks(accTok: accTok, idList: currListID), completion: <#T##(TasksCodable?, Error?) -> Void#>)
             
+        }
+    }
             
+    class func dataObjectsInGoogleObjectsTasks(accTok: String, dataObjectsTask: [Tasks], googleObjectsTasks: TasksCodable) {
+            if dataObjectsTask.count == 0 {
+                return
+            }
+            let idList = dataObjectsTask[0].idList!
             for dataObject in dataObjectsTask {
                 
-                let currId = String(describing: dataObject.id)
-                if currListID == "" {
-                    currListID = dataObject.idList!
-                }
-                //let urlString = "https://tasks.googleapis.com/tasks/v1/users/@me/lists/\(currListID)/"
-                let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks\(currId))/"
+                let idTask = String(describing: dataObject.id)
+                var currGoogleObjectsTasksItems = googleObjectsTasks.items
+                let currGoogleObjectsTasks = currGoogleObjectsTasksItems.filter{ $0.id == idTask }
+                
+                //let urlString = "https://tasks.googleapis.com/tasks/v1/lists/\(currListID)/tasks\(currId))/"
                 let updatedDate = Functions.dateToStringFormat(date: dataObject.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
                 let paramsBody: [String : String] = [
                     "name": dataObject.name!,
                     "updated": updatedDate
                 ]
+                
+                if currGoogleObjectsTasks.count == 0 {
+                    API.request(endpoint: PostEndpoint.postDataTask(accTok: accTok, paramsBody: paramsBody)) { (result: Result<TasksCodable, Error>) in
+                        //var objectsFromJson: [ListCodable] = []
+                        
+                        switch result {
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        case .success(let objects):
+                            print(objects)
+                            //objectsFromJson = objects.items
+                        }
+                    }
+                    continue
+                }
+
                 //APIService().doRequestPatch(urlString: urlString, params: nil, accTok: accTok, paramsBody: paramsBody)
-                API.request(endpoint: PostEndpoint.patchDataTask(accTok: accTok, paramsBody: paramsBody, idList: currListID, idTasks: currId)) { (result: Result<ListsCodable, Error>) in
+                API.request(endpoint: PostEndpoint.patchDataTask(accTok: accTok, paramsBody: paramsBody, idList: idList, idTask: idTask)) { (result: Result<TasksCodable, Error>) in
                     //var objectsFromJson: [ListCodable] = []
                     
                     switch result {
@@ -436,17 +458,17 @@ class JsonGoogle {
 //                    //jsonTasks = objects.items
 //                }
                                     //}
-                for jsonTask in jsonTasks {
-                    let currObjectsTasks = dataObjectsTask.filter { $0.id == (jsonTask as! TaskModel).id }
-                    if currObjectsTasks.count == 0 { // delete
-                    //    APIService().doRequestDelete(urlString: urlStringTasks, params: nil, accTok: accTok)
-                    }
-                }
+//                for jsonTask in googleObjectsTasks {
+//                    let currObjectsTasks = dataObjectsTask.filter { $0.id == (jsonTask as! TaskModel).id }
+//                    if currObjectsTasks.count == 0 { // delete
+//                    //    APIService().doRequestDelete(urlString: urlStringTasks, params: nil, accTok: accTok)
+//                    }
+//                }
                                     
      //       } // API
             //)
             
-        } // if
+        //} // if
         
     } // func
         

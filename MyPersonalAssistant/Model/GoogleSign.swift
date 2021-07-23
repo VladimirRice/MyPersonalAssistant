@@ -367,7 +367,7 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
                         // add
                         var isNew = false
                         if currGoogleObjectsList.count == 0 {
-                            continue
+                            
                             
 //                            let urlStringList = "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 //                            let updatedDate = Functions.dateToStringFormat(date: dataObjectList.updatedDate!, minDateFormat: "yyyy-MM-dd'T'HH:mm")
@@ -397,8 +397,9 @@ func googleSynchronNextAPI(selfVC: UIViewController, listID: String) {
 //                            }
 
                             isNew = true
+                            continue
                         }
-                        JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
+                        //JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: [dataObjectList], isNew: isNew)
 
                         let currDataObjectsTask = dataObjectsTaskAll.filter { $0.idList == dataObjectList.id }
                         JsonGoogle.dataObjectsInGoogleObjects(accTok: accTok, dataObjects: currDataObjectsTask)

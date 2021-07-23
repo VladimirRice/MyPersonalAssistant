@@ -15,7 +15,7 @@ struct TasksCodable: Codable {
 }
 
 struct TaskCodable: Codable {
-    var dateTermination: Date?
+//    var dateTermination: Date?
 //    var heading = ""
 //    var image0: Data?
 //    var image1: Data?
@@ -34,7 +34,10 @@ struct TaskCodable: Codable {
 //    var color: NSNumber?
 //    var status = ""
 //    var category = ""
-    var go = false
+//    var go = false
+    var id = ""
+    var title = ""
+//    var updated = ""
 }
 
 class TaskModel {

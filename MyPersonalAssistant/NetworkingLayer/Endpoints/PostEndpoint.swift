@@ -12,7 +12,7 @@ enum PostEndpoint: Endpoint {
     case getDataTask(accTok: String, idList: String)
     case postDataTask(accTok: String, paramsBody: [String : String])
     case putDataTask(accTok: String)
-    case patchDataTask(accTok: String, paramsBody: [String : String], idList: String?, idTasks: String)
+    case patchDataTask(accTok: String, paramsBody: [String : String], idList: String?, idTask: String)
     case deleteDataTask(accTok: String)
 
     var scheme: String {
@@ -50,7 +50,7 @@ enum PostEndpoint: Endpoint {
         case .deleteDataList:
             return "/posts/1"
         
-        case .getDataTask(let idList):
+        case .getDataTask(let accTok, let idList):
             return "/tasks/v1/lists/\(idList)/tasks"
         case .postDataTask:
             return "/tasks/v1/users/@me/lists"
@@ -112,13 +112,13 @@ enum PostEndpoint: Endpoint {
         case .deleteDataList:
             return []
             
-        case .getDataTask(let accTok):
+        case .getDataTask(let accTok, let idList):
             return []
         case .postDataTask(let accTok):
             return []
         case .putDataTask(let accTok):
             return []
-        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTask):
             return []
         case .deleteDataTask:
             return []
@@ -139,14 +139,14 @@ enum PostEndpoint: Endpoint {
         case .deleteDataList:
             return [:]
         
-        case .getDataTask(let idList):
+        case .getDataTask(let accTok, let idList):
             return [:]
         case .postDataTask(let accTok, let paramsBody):
             return paramsBody
         case .putDataTask:
             return ["title": "Foo",
                     "body": "Bar"]
-        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTask):
             return paramsBody
         case .deleteDataTask:
             return [:]
@@ -177,7 +177,7 @@ enum PostEndpoint: Endpoint {
         case .deleteDataList:
             return [:]
         
-        case .getDataTask(let accTok):
+        case .getDataTask(let accTok, let idList):
             return [
                 "Authorization":"Bearer \(accTok)"
                 ,"Accept":"application/json"
@@ -197,7 +197,7 @@ enum PostEndpoint: Endpoint {
             ]
         case .deleteDataTask:
             return [:]
-        case .patchDataTask(let accTok, let paramsBody, let idList, let idTasks):
+        case .patchDataTask(let accTok, let paramsBody, let idList, let idTask):
             return [
                 "Authorization":"Bearer \(accTok)"
                 ,"Accept":"application/json"
